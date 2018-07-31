@@ -1,0 +1,248 @@
+openapi: 3.0.0
+
+info:
+  version: 0.0.0
+  title: Honeybee Server API
+  description: A sample API definition for a honeybee server
+
+schemes:
+  - http
+host: api.ladybug-tools.io
+basePath: /api
+
+paths:
+  /analysis_grid:
+    get:
+      summary: Get some analysis_grid files
+      description: Retrieves a list of material uuids for a given filter.
+      parameters:
+        - name: size
+          in: query
+          description: Number of files returned
+          schema:
+            type: integer
+        - name: country
+          in: query
+          description: Country where definitions should be from
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of analysis_grids matching the query parameters
+          content:
+            application/json:
+              schema:
+                properties:
+                  query:
+                    properties:
+                      size:
+                        example: 5
+                      country:
+                        example: UK
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        uuid:
+                          type: string
+                        analysis_grid:
+                          $ref: "#/components/schemas/AnalysisGridSchema"
+
+        '404':
+          description: Couldn't find any definitions matching your search query... :(
+    post:
+      summary: Create a new analysis_grid file
+      description: Adds a new analysis_grid file to the list
+      requestBody:
+        description: A analysis_grid JSON filer with a uuid key.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalysisGridSchema"
+      responses:
+        '204':
+          description: analysis_grid succesfully created.
+          content:
+            application/json:
+              schema:
+                properties:
+                  uuid:
+                    type: string
+                    example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        '400':
+          description: Could not create analysis_grid... :(
+
+  /analysis_grid/{uuid}:
+    get:
+      summary: Get a specific analysis_grid file
+      description: Returns a single analysis_grid file
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the analysis_grid.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Succesfully returns the analysis_grid
+          content:
+            application/json:
+              schema:
+                required:
+                  - uuid
+                  - analysis_grid
+                properties:
+                  uuid:
+                    type: string
+                  analysis_grid:
+                    $ref: "#/components/schemas/AnalysisGridSchema"
+        '400':
+          description: The uuid provided is invalid
+        '404':
+          description: The analysis_grid does not exist
+
+    put:
+      summary: Modify an existing analysis_grid file
+      description: Modifies any parameter (except uuid) of an analysis_grid file by completely replacing the definition file. A finer grain method can be set up later.
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the analysis_grid.
+          schema:
+            type: string
+      requestBody:
+        description: A analysis_grid JSON filer with a uuid key.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalysisGridSchema"
+
+      responses:
+        '200':
+          description: Everything went smooth and well
+        '400':
+          description: Bad request, something went wrong... :(
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+    delete:
+      summary: Delete an existing analysis_grid file
+      description: Delete an analysis_grid file in the database specifying the uuid of the file
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the analysis_grid.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File succesfully deleted
+        '400':
+          description: Bad request, something went wrong... :(
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: File not found
+
+components:
+  schemas:
+    PointSchema:
+      properties:
+        x:
+          type: number
+        y:
+          type: number
+        z:
+          type: number
+
+    VectorSchema:
+      properties:
+        x:
+          type: number
+        y:
+          type: number
+        z:
+          type: number
+
+    HoySchema:
+      properties:
+        hoy_id:
+          type: integer
+          description: The hour of the year for a given set of results values
+        hoy:
+          properties:
+            direct_value:
+              type: number
+            indirect_value:
+              type: number
+
+    StateSchema:
+      properties:
+        state_id:
+          type: string
+          description: The id of a given state for the source of light
+        state:
+          type: array
+          items:
+            $ref: "#/components/schemas/HoySchema"
+
+
+    SourceSchema:
+      properties:
+        source_id:
+          type: string
+          description: The id of a source of light
+        source:
+          type: array
+          items:
+            $ref: "#/components/schemas/StateSchema"
+
+    # ValuesSchema:
+    #   type: array
+    #   items:
+    #     $ref: "#/components/schemas/SourceSchema"
+
+    AnalysisPointSchema:
+      properties:
+        location:
+          $ref: "#/components/schemas/PointSchema"
+        direction:
+          $ref: "#/components/schemas/VectorSchema"
+        values:
+          type: array
+          items:
+            $ref: "#/components/schemas/SourceSchema"
+
+    AnalysisGridSchema:
+      properties:
+        name:
+          type: string
+          description: The name of the grid
+        analysis_points:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalysisPointSchema"
+        window_groups:
+          type: array
+          items:
+            description: Name of a window group which contributes to the grid.
+            type: string
+
+
+    QueryParameters:
+      properties:
+        type:
+          type: string
+          example: The type of something the Definition is

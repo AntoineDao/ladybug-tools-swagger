@@ -1,0 +1,227 @@
+openapi: 3.0.0
+
+info:
+  version: 0.0.0
+  title: Honeybee Server API
+  description: A sample API definition for a honeybee server
+
+schemes:
+  - http
+host: api.ladybug-tools.io
+basePath: /api
+
+paths:
+  /epw:
+    get:
+      summary: Get some epw files
+      description: Retrieves a list of epw uuids for a given filter.
+      parameters:
+        - name: size
+          in: query
+          description: Number of files returned
+          schema:
+            type: integer
+        - name: country
+          in: query
+          description: Country where components/schemas should be from
+          schema:
+            type: string
+      responses:
+        200:
+          description: A list of epws matching the query parameters
+          content:
+            application/json:
+              schema:
+                properties:
+                  query:
+                    properties:
+                      size:
+                        example: 5
+                      country:
+                        example: UK
+        404:
+          description: Couldn't find any EPWs matching your search query... :(
+    post:
+      summary: Create a new epw file
+      description: Adds a new epw file to the list
+      requestBody:
+          description: The location of the epw.
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Epw"
+      responses:
+        204:
+          description: Epw succesfully created.
+          content:
+            application/json:
+              schema:
+                properties:
+                  uuid:
+                    type: string
+                    example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create epw... :(
+  /epw/{uuid}:
+
+    get:
+      summary: Get a specific epw file
+      description: Returns a single epw file
+      parameters:
+        - name: uuid
+          required: true
+          in: path
+          description: The unique identifier of the epw.
+          schema:
+            type: string
+      responses:
+        200:
+          description: Succesfully returns the EPW
+          content:
+            application/json:
+              schema:
+                required:
+                  - uuid
+                  - epw
+                properties:
+                  uuid:
+                    type: string
+                  epw:
+                    $ref: "#/components/schemas/Epw"
+        400:
+          description: The uuid provided is invalid
+        404:
+          description: The epw does not exist
+
+    put:
+      summary: Modify an existing epw file
+      description: Modifies any parameter (except uuid) of an epw file by completely replacing the EPW file. A finer grain method can be set up later.
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          description: The unique identifier of the epw.
+          schema:
+            type: string
+      requestBody:
+        description: An EPW JSON file with a uuid key.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Epw"
+
+      responses:
+        '200':
+          description: Everything went smooth and well
+        '400':
+          description: Bad request, something went wrong... :(
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+    delete:
+      summary: Delete an existing epw file
+      description: Delete an epw file in the database specifying the uuid of the file
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          description: The unique identifier of the epw.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File succesfully deleted
+        '400':
+          description: Bad request, something went wrong... :(
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: File not found
+
+
+
+components:
+  schemas:
+
+    Epw:
+      required:
+        - location
+        - header
+        - data
+      properties:
+        header:
+          type: array
+          minItems: 8
+          maxItems: 8
+          items:
+            type: string
+        location:
+          $ref: "#/components/schemas/Location"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/DataCollection"
+
+    Location:
+      properties:
+        city:
+          type: string
+        latitude:
+          minimum: -90
+          maximum: 90
+          type: number
+        longitude:
+          minimum: -180
+          maximum: 180
+          type: number
+        time_zone:
+          type: string
+        elevation:
+          type: number
+
+    DataCollection:
+      required:
+        - data
+      properties:
+        header:
+          type: object
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/DataType"
+
+    DataType:
+      required:
+        - value
+        - datetime
+        - standard
+        - nickname
+      properties:
+        value:
+          allOf:
+            - type: string
+            - type: number
+        datetime:
+          default: null
+        standard:
+          type: string
+          default: null
+          enum: [SI, IP]
+        nickname:
+          type: string
+          default: null
+
+    QueryParameters:
+      properties:
+        type:
+          type: string
+          example: The type of something the Definition is

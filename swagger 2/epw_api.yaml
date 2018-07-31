@@ -1,0 +1,211 @@
+swagger: "2.0"
+
+info:
+  version: 0.0.0
+  title: Honeybee Server API
+  description: A sample API definition for a honeybee server
+
+schemes:
+  - http
+host: api.ladybug-tools.io
+basePath: /api
+
+paths:
+  /epw:
+    get:
+      summary: Get some epw files
+      description: Retrieves a list of epw uuids for a given filter.
+      produces:
+        - application/json
+      parameters:
+        - name: size
+          in: query
+          description: Number of files returned
+          type: integer
+        - name: country
+          in: query
+          description: Country where definitions should be from
+          type: string
+      responses:
+        200:
+          description: A list of epws matching the query parameters
+          schema:
+            properties:
+              query:
+                properties:
+                  size:
+                    example: 5
+                  country:
+                    example: UK
+        404:
+          description: Couldn't find any EPWs matching your search query... :(
+    post:
+      summary: Create a new epw file
+      description: Adds a new epw file to the list
+      parameters:
+        - in: body
+          name: epw
+          description: The location of the epw.
+          required: true
+          schema:
+            $ref: "#/definitions/Epw"
+      responses:
+        204:
+          description: Epw succesfully created.
+          schema:
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create epw... :(
+  /epw/{uuid}:
+
+    get:
+      summary: Get a specific epw file
+      description: Returns a single epw file
+      parameters:
+        - name: uuid
+          required: true
+          in: path
+          description: The unique identifier of the epw.
+          type: string
+      responses:
+        200:
+          description: Succesfully returns the EPW
+          schema:
+            required:
+              - uuid
+              - epw
+            properties:
+              uuid:
+                type: string
+              epw:
+                $ref: "#/definitions/Epw"
+        400:
+          description: The uuid provided is invalid
+        404:
+          description: The epw does not exist
+
+    put:
+      summary: Modify an existing epw file
+      description: Modifies any parameter (except uuid) of an epw file by completely replacing the EPW file. A finer grain method can be set up later.
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          description: The unique identifier of the epw.
+          type: string
+        - in: body
+          name: epw
+          description: The location of the epw.
+          required: true
+          schema:
+            $ref: "#/definitions/Epw"
+
+      responses:
+        '200':
+          description: Everything went smooth and well
+        '400':
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+    delete:
+      summary: Delete an existing epw file
+      description: Delete an epw file in the database specifying the uuid of the file
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          description: The unique identifier of the epw.
+          type: string
+      responses:
+        '200':
+          description: File succesfully deleted
+        '400':
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+        '404':
+          description: File not found
+
+
+
+definitions:
+  Epw:
+    required:
+      - location
+      - header
+      - data
+    properties:
+      header:
+        type: array
+        minItems: 8
+        maxItems: 8
+        items:
+          type: string
+      location:
+        $ref: "#/definitions/Location"
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/DataCollection"
+
+  Location:
+    properties:
+      city:
+        type: string
+      latitude:
+        minimum: -90
+        maximum: 90
+        type: number
+      longitude:
+        minimum: -180
+        maximum: 180
+        type: number
+      time_zone:
+        type: string
+      elevation:
+        type: number
+
+  DataCollection:
+    required:
+      - data
+    properties:
+      header:
+        type: object
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/DataType"
+
+  DataType:
+    required:
+      - value
+      - datetime
+      - standard
+      - nickname
+    properties:
+      value:
+        allOf:
+          - type: string
+          - type: number
+      datetime:
+        default: null
+      standard:
+        type: string
+        default: null
+        enum: [SI, IP]
+      nickname:
+        type: string
+        default: null
+
+  QueryParameters:
+    properties:
+      type:
+        type: string
+        example: The type of something the Definition is

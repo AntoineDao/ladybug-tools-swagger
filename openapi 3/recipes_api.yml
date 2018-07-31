@@ -1,0 +1,854 @@
+openapi: 3.0.0
+
+info:
+  version: 0.0.0
+  title: Honeybee Server API
+  description: A sample API definition for a honeybee server
+
+schemes:
+  - http
+host: api.ladybug-tools.io
+basePath: /api
+
+paths:
+  /recipe/gridbased/:
+    get:
+      summary: Get some analysis_grid files
+      description: Retrieves a list of material uuids for a given filter.
+      parameters:
+        - name: size
+          in: query
+          description: Number of files returned
+          schema:
+            type: integer
+        - name: country
+          in: query
+          description: Country where definitions should be from
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of analysis_grids matching the query parameters
+          content:
+            application/json:
+              schema:
+                properties:
+                  query:
+                    properties:
+                      size:
+                        example: 5
+                      country:
+                        example: UK
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        uuid:
+                          type: string
+                        recipe:
+                          $ref: '#/components/schemas/GridBasedRecipeSchema'
+
+        '404':
+          description: Couldn't find any definitions matching your search query... :(
+    post:
+      summary: Create a new analysis_grid file
+      description: Adds a new analysis_grid file to the list
+      requestBody:
+        description: A analysis_grid JSON filer with a uuid key.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GridBasedRecipeSchema'
+
+      responses:
+        '204':
+          description: analysis_grid succesfully created.
+          content:
+            application/json:
+              schema:
+                properties:
+                  uuid:
+                    type: string
+                    example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        '400':
+          description: Could not create analysis_grid... :(
+
+  /recipe/gridbased/{uuid}:
+    get:
+      summary: Get a specific analysis_grid file
+      description: Returns a single analysis_grid file
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the analysis_grid.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Succesfully returns the analysis_grid
+          content:
+            application/json:
+              schema:
+                required:
+                  - uuid
+                  - analysis_grid
+                properties:
+                  uuid:
+                    type: string
+                  recipe:
+                    $ref: '#/components/schemas/GridBasedRecipeSchema'
+
+
+        '400':
+          description: The uuid provided is invalid
+        '404':
+          description: The analysis_grid does not exist
+
+    put:
+      summary: Modify an existing analysis_grid file
+      description: Modifies any parameter (except uuid) of an analysis_grid file by completely replacing the definition file. A finer grain method can be set up later.
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the analysis_grid.
+          schema:
+            type: string
+      requestBody:
+        description: A analysis_grid JSON filer with a uuid key.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GridBasedRecipeSchema'
+
+      responses:
+        '200':
+          description: Everything went smooth and well
+        '400':
+          description: Bad request, something went wrong... :(
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+    delete:
+      summary: Delete an existing analysis_grid file
+      description: Delete an analysis_grid file in the database specifying the uuid of the file
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the analysis_grid.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File succesfully deleted
+        '400':
+          description: Bad request, something went wrong... :(
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: File not found
+
+components:
+  schemas:
+
+    HoysSchema:
+      type: array
+      description: A list of hours of the year
+      items:
+        type: int
+        minumum: 0
+        maximum: 8760
+
+    LocationSchema:
+      properties:
+        city:
+          type: string
+        latitude:
+          minimum: -90
+          maximum: 90
+          type: number
+        longitude:
+          minimum: -180
+          maximum: 180
+          type: number
+        time_zone:
+          type: string
+        elevation:
+          type: number
+
+    AnalysisType:
+      type: integer
+      enum: [0,1,2]
+      description: 0 - illuminance(lux), 1 - radiation (kwh), 2 - luminance (Candela)
+
+    RadianceParameters:
+      type: string
+      description: A standard radiance parameter string
+      example: -ab 5 -aa 0.05 -ar 128
+
+    SkySchema:
+      properties:
+        location:
+          $ref: "#/components/schemas/LocationSchema"
+        hour:
+          type: integer
+          minumum: 0
+          maximum: 23
+          description: hour of the day
+        day:
+          type: integer
+          minumum: 1
+          maximum: 31
+          description: day of the month
+        month:
+          type: integer
+          minumum: 1
+          maximum: 12
+          description: month of the year
+        north:
+          type: number
+          minimum: 0
+          maximum: 360
+          description: angle in degrees between 0-360 to indicate North
+        sky_type:
+          type: integer
+          enum: [0,1,2,3,4,5]
+          description: 0 - Sunny with sun, 1 - sunny without sun, 2 - intermediate with sun, 3 - intermediate without sun, 4 - cloudy sky, 5 - uniform sky
+
+
+    SkyMtxSchema:
+      properties:
+        wea:
+          $ref: "#/components/schemas/WeaSchema"
+        sky_density:
+          type: int
+          enum: [1,2]
+          description: 1 - Tregenza Sky, 2 - Reinhart Sky, etc. (Default - 1)
+        north:
+          type: number
+          minimum: 0
+          maximum: 360
+          description: angle in degrees between 0-360 to indicate North
+        hoys:
+          $ref: "#/components/schemas/HoysSchema"
+        mode:
+          type: int
+          enum: [0,1,2]
+          description: sky mode
+        suffix:
+          type: string
+          description: Suffix for the sky matrix
+
+
+    GridBasedRecipeSchema:
+      oneOf:
+        - $ref: '#/components/schemas/DaylightFactorGridBasedSchema'
+        - $ref: '#/components/schemas/DirectReflectionGridBasedSchema'
+        - $ref: '#/components/schemas/SolarAccessGridBasedSchema'
+        - $ref: '#/components/schemas/PointInTimeGridBasedSchema'
+        - $ref: '#/components/schemas/AnnualGridBasedSchema'
+        - $ref: '#/components/schemas/RadiationGridBasedSchema'
+        - $ref: '#/components/schemas/ThreePhaselGridBasedSchema'
+        - $ref: '#/components/schemas/FivePhaselGridBasedSchema'
+      discriminator:
+        propertyName: id
+        mapping:
+          daylight_factor: '#/components/schemas/DaylightFactorGridBasedSchema'
+          direct_refection: '#/components/schemas/DirectReflectionGridBasedSchema'
+          solar_access: '#/components/schemas/SolarAccessGridBasedSchema'
+          point_in_time: '#/components/schemas/PointInTimeGridBasedSchema'
+          annual: '#/components/schemas/AnnualGridBasedSchema'
+          radiation: '#/components/schemas/RadiationGridBasedSchema'
+          three_phase: '#/components/schemas/ThreePhaselGridBasedSchema'
+          five_phase: '#/components/schemas/FivePhaselGridBasedSchema'
+      example:
+        id: annual
+        type: gridbased
+        sky_mtx:
+          wea: wea Json file
+          sky_density: 1
+          north: 0
+          mode: 2
+          suffix: null
+        analysis_grids: [list of analysis grids]
+        surfaces: [list of surfaces]
+        analysis_type: 2
+        rad_parameters: -ab 5 -aa 0.05 -ar 128
+
+    DaylightFactorGridBasedSchema:
+      properties:
+        id:
+          type: string
+          enum: [daylight_factor]
+        type:
+          type: string
+          enum: [gridbased]
+        analysis_grids:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalysisGridSchema"
+        surfaces:
+          type: array
+          items:
+            $ref: "#/components/schemas/HBSurfaceSchema"
+        rad_parameters:
+          $ref: "#/components/schemas/RadianceParameters"
+
+
+    DirectReflectionGridBasedSchema:
+      properties:
+        id:
+          type: string
+          enum: [direct_reflection]
+        type:
+          type: string
+          enum: [gridbased]
+        analysis_grids:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalysisGridSchema"
+        surfaces:
+          type: array
+          items:
+            $ref: "#/components/schemas/HBSurfaceSchema"
+        location:
+          $ref: "#/components/schemas/LocationSchema"
+        hoys:
+          $ref: "#/components/schemas/HoysSchema"
+        sun_vectors:
+          type: array
+          description: A list of vectors if location is not provided
+          items:
+            $ref: "#/components/schemas/VectorSchema"
+
+    SolarAccessGridBasedSchema:
+      properties:
+        id:
+          type: string
+          enum: [solar_access]
+        type:
+          type: string
+          enum: [gridbased]
+        analysis_grids:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalysisGridSchema"
+        surfaces:
+          type: array
+          items:
+            $ref: "#/components/schemas/HBSurfaceSchema"
+        location:
+          $ref: "#/components/schemas/LocationSchema"
+        hoys:
+          $ref: "#/components/schemas/HoysSchema"
+        sun_vectors:
+          type: array
+          description: A list of vectors if location is not provided
+          items:
+            $ref: "#/components/schemas/VectorSchema"
+
+    PointInTimeGridBasedSchema:
+      properties:
+        id:
+          type: string
+          enum: [point_in_time]
+        type:
+          type: string
+          enum: [gridbased]
+        analysis_grids:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalysisGridSchema"
+        surfaces:
+          type: array
+          items:
+            $ref: "#/components/schemas/HBSurfaceSchema"
+        sky:
+          $ref: "#/components/schemas/SkySchema"
+        analysis_type:
+          $ref: "#/components/schemas/AnalysisType"
+        rad_parameters:
+          $ref: "#/components/schemas/RadianceParameters"
+
+    AnnualGridBasedSchema:
+      example:
+        id: annual
+        type: gridbased
+        sky_mtx:
+          wea: wea Json file
+          sky_density: 1
+          north: 0
+          mode: 2
+          suffix: null
+        analysis_grids:
+          type: array
+          items:
+            analysis_grid: an analysis grid Json file
+        surfaces:
+          type: array
+          items:
+            surface: an surface Json file
+        analysis_type: 2
+        rad_parameters: -ab 5 -aa 0.05 -ar 128
+      properties:
+        id:
+          type: string
+          enum: [annual]
+        type:
+          type: string
+          enum: [gridbased]
+        sky_mtx:
+          $ref: "#/components/schemas/SkyMtxSchema"
+        analysis_grids:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalysisGridSchema"
+        surfaces:
+          type: array
+          items:
+            $ref: "#/components/schemas/HBSurfaceSchema"
+        analysis_type:
+          $ref: "#/components/schemas/AnalysisType"
+        rad_parameters:
+          $ref: "#/components/schemas/RadianceParameters"
+
+    RadiationGridBasedSchema:
+      properties:
+        id:
+          type: string
+          enum: [radiation]
+        type:
+          type: string
+          enum: [gridbased]
+        sky_mtx:
+          $ref: "#/components/schemas/SkyMtxSchema"
+        analysis_grids:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalysisGridSchema"
+        surfaces:
+          type: array
+          items:
+            $ref: "#/components/schemas/HBSurfaceSchema"
+        rad_parameters:
+          $ref: "#/components/schemas/RadianceParameters"
+
+    ThreePhaselGridBasedSchema:
+      properties:
+        id:
+          type: string
+          enum: [three_phase]
+        type:
+          type: string
+          enum: [gridbased]
+        sky_mtx:
+          $ref: "#/components/schemas/SkyMtxSchema"
+        analysis_grids:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalysisGridSchema"
+        surfaces:
+          type: array
+          items:
+            $ref: "#/components/schemas/HBSurfaceSchema"
+        analysis_type:
+          $ref: "#/components/schemas/AnalysisType"
+        view_mtx_parameters:
+          $ref: "#/components/schemas/RadianceParameters"
+        daylight_mtx_parameters:
+          $ref: "#/components/schemas/RadianceParameters"
+
+    FivePhaselGridBasedSchema:
+      properties:
+        id:
+          type: string
+          enum: [five_phase]
+        type:
+          type: string
+          enum: [gridbased]
+        sky_mtx:
+          $ref: "#/components/schemas/SkyMtxSchema"
+        analysis_grids:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalysisGridSchema"
+        surfaces:
+          type: array
+          items:
+            $ref: "#/components/schemas/HBSurfaceSchema"
+        analysis_type:
+          $ref: "#/components/schemas/AnalysisType"
+        view_mtx_parameters:
+          $ref: "#/components/schemas/RadianceParameters"
+        daylight_mtx_parameters:
+          $ref: "#/components/schemas/RadianceParameters"
+
+    PointSchema:
+      properties:
+        x:
+          type: number
+        y:
+          type: number
+        z:
+          type: number
+
+    VectorSchema:
+      properties:
+        x:
+          type: number
+        y:
+          type: number
+        z:
+          type: number
+
+    HoySchema:
+      properties:
+        hoy_id:
+          type: integer
+          description: The hour of the year for a given set of results values
+        hoy:
+          properties:
+            direct_value:
+              type: number
+            indirect_value:
+              type: number
+
+    StateSchema:
+      properties:
+        state_id:
+          type: string
+          description: The id of a given state for the source of light
+        state:
+          type: array
+          items:
+            $ref: "#/components/schemas/HoySchema"
+
+
+    SourceSchema:
+      properties:
+        source_id:
+          type: string
+          description: The id of a source of light
+        source:
+          type: array
+          items:
+            $ref: "#/components/schemas/StateSchema"
+
+    # ValuesSchema:
+    #   type: array
+    #   items:
+    #     $ref: "#/components/schemas/SourceSchema"
+
+    AnalysisPointSchema:
+      properties:
+        location:
+          $ref: "#/components/schemas/PointSchema"
+        direction:
+          $ref: "#/components/schemas/VectorSchema"
+        values:
+          type: array
+          items:
+            $ref: "#/components/schemas/SourceSchema"
+
+    AnalysisGridSchema:
+      properties:
+        name:
+          type: string
+          description: The name of the grid
+        analysis_points:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalysisPointSchema"
+        window_groups:
+          type: array
+          items:
+            description: Name of a window group which contributes to the grid.
+            type: string
+
+
+    VertexSchema:
+      type: array
+      minimum: 3
+      items:
+        properties:
+          x:
+            type: number
+          y:
+            type: number
+          z:
+            type: number
+
+    SurfacePropertySchema:
+      properties:
+        surface_type:
+          type: number
+          minimum: 0
+          maximum: 6
+          description: 0.0=Wall, 0.5=UndergroundWall, 1.0=Roof, 1.5=UndergroundCeiling, 2.0=Floor, 2.5=SlabOnGrade, 2.75=ExposedFloor, 3.0=Ceiling, 5.0=Window, 6.0=Context
+        rad_properties:
+          $ref: "#/components/schemas/MaterialSchema"
+
+    SurfaceStateSchema:
+      properties:
+        name:
+          type: string
+          description: name of the state, usually 'default'
+        surface_properties:
+          $ref: "#/components/schemas/SurfacePropertySchema"
+
+
+    AnalysisSurfaceSchema:
+      properties:
+        name:
+          type: string
+          description: The name of the surface
+        surface_type:
+          type: number
+          minimum: 0
+          maximum: 6
+          description: 0.0=Wall, 0.5=UndergroundWall, 1.0=Roof, 1.5=UndergroundCeiling, 2.0=Floor, 2.5=SlabOnGrade, 2.75=ExposedFloor, 3.0=Ceiling, 5.0=Window, 6.0=Context
+        vertices:
+          type: array
+          items:
+            $ref: "#/components/schemas/VertexSchema"
+        rad_properties:
+          properties:
+            uuid:
+              type: string
+            material:
+              $ref: "#/components/schemas/MaterialSchema"
+        surface_states:
+          type: array
+          items:
+            $ref: "#/components/schemas/SurfaceStateSchema"
+
+    HBSurfaceSchema:
+      properties:
+        parent_surface:
+          $ref: "#/components/schemas/AnalysisSurfaceSchema"
+        child_surfaces:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalysisSurfaceSchema"
+
+    MaterialSchema:
+      properties:
+        type:
+          description: The type of material
+          type: string
+        material:
+          oneOf:
+            - $ref: "#/components/schemas/TransluscentMaterial"
+            - $ref: "#/components/schemas/OpaqueMaterial"
+            - $ref: "#/components/schemas/LightSourceMaterial"
+            - $ref: "#/components/schemas/BSDFMaterial"
+      example:
+        type: opaque
+        material:
+          name: HoneyComb
+          type: plastic
+          r_reflectance: 0.4
+          g_reflectance: 0.5
+          b_reflectance: 0.2
+          refraction: 0.4
+          specularity: 0.01
+          roughness: 0.03
+          modifier: void
+
+    TransluscentMaterial:
+      properties:
+        name:
+          description: Name of the material
+          type: string
+        r_transmittance:
+          description: Transmittance for red
+          type: number
+          minimum: 0
+          maximum: 1
+        g_transmittance:
+          description: Transmittance for green
+          type: number
+          minimum: 0
+          maximum: 1
+        b_transmittance:
+          description: Transmittance for blue
+          type: number
+          minimum: 0
+          maximum: 1
+        refraction:
+          description: Index of refraction
+          type: number
+          minimum: 0
+          maximum: 1
+        modifier:
+          type: string
+          default: void
+
+    OpaqueMaterial:
+      properties:
+        name:
+          description: Name of the material
+          type: string
+        type:
+          description: Material type
+          type: string
+          enum: [metal, plastic]
+        r_reflectance:
+          description: Reflectance for red
+          type: number
+          minimum: 0
+          maximum: 1
+        g_reflectance:
+          description: Reflectance for green
+          type: number
+          minimum: 0
+          maximum: 1
+        b_reflectance:
+          description: Reflectance for blue
+          type: number
+          minimum: 0
+          maximum: 1
+        refraction:
+          description: Index of refraction
+          type: number
+          minimum: 0
+          maximum: 1
+        specularity:
+          description: Material specularity
+          type: number
+        roughness:
+          description: Material roughness
+          type: number
+        modifier:
+          type: string
+          default: void
+
+    LightSourceMaterial:
+      properties:
+        name:
+          description: Name of the material
+          type: string
+        red:
+          description: A positive value for the Red channel of the glow
+          type: number
+          minimum: 0
+          maximum: 1
+        green:
+          description: A positive value for the Green channel of the glow
+          type: number
+          minimum: 0
+          maximum: 1
+        blue:
+          description: A positive value for the Blue channel of the glow
+          type: number
+          minimum: 0
+          maximum: 1
+        radius:
+          description: Maximum radius for shadow testing
+          type: number
+        modifier:
+          type: string
+          default: void
+
+    BSDFMaterial:
+      properties:
+        name:
+          description: Name of the material
+          type: string
+        xml_data:
+          description: A string of the original XML
+          type: string
+        up_orientation:
+          type: number
+        thickness:
+          type: number
+        modifier:
+          type: string
+          default: void
+
+    QueryParameters:
+      properties:
+        type:
+          type: string
+          example: The type of something the Definition is
+
+
+    WeaSchema:
+      required:
+        - location
+        - header
+        - data
+      properties:
+        header:
+          type: array
+          minItems: 8
+          maxItems: 8
+          items:
+            type: string
+        location:
+          $ref: "#/components/schemas/Location"
+        direct_normal_radiation:
+          $ref: "#/components/schemas/DataCollection"
+        diffuse_horizontal_radiation:
+            $ref: "#/components/schemas/DataCollection"
+
+
+    Location:
+      properties:
+        city:
+          type: string
+        latitude:
+          minimum: -90
+          maximum: 90
+          type: number
+        longitude:
+          minimum: -180
+          maximum: 180
+          type: number
+        time_zone:
+          type: string
+        elevation:
+          type: number
+
+    DataCollection:
+      required:
+        - data
+      properties:
+        header:
+          type: object
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/DataType"
+
+    DataType:
+      required:
+        - value
+        - datetime
+        - standard
+        - nickname
+      properties:
+        value:
+          allOf:
+            - type: string
+            - type: number
+        datetime:
+          default: null
+        standard:
+          type: string
+          default: null
+          enum: [SI, IP]
+        nickname:
+          type: string
+          default: null

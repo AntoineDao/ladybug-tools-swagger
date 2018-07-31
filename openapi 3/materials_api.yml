@@ -1,0 +1,307 @@
+openapi: 3.0.0
+
+info:
+  version: 0.0.0
+  title: Honeybee Server API
+  description: A sample API definition for a honeybee server
+
+schemes:
+  - http
+host: api.ladybug-tools.io
+basePath: /api
+
+paths:
+  /material:
+    get:
+      summary: Get some material files
+      description: Retrieves a list of material uuids for a given filter.
+      parameters:
+        - name: size
+          in: query
+          description: Number of files returned
+          schema:
+            type: integer
+        - name: country
+          in: query
+          description: Country where definitions should be from
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of materials matching the query parameters
+          content:
+            application/json:
+              schema:
+                properties:
+                  query:
+                    properties:
+                      size:
+                        example: 5
+                      country:
+                        example: UK
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        schema:
+                          required:
+                            - uuid
+                            - material
+                          properties:
+                            uuid:
+                              type: string
+                            material:
+                              $ref: "#/components/schemas/MaterialSchema"
+
+        '404':
+          description: Couldn't find any definitions matching your search query... :(
+    post:
+      summary: Create a new material file
+      description: Adds a new material file to the list
+      requestBody:
+        description: A material JSON filer with a uuid key.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MaterialSchema"
+      responses:
+        '204':
+          description: material succesfully created.
+          content:
+            application/json:
+              schema:
+                properties:
+                  uuid:
+                    type: string
+                    example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        '400':
+          description: Could not create material... :(
+
+  /material/{uuid}:
+    get:
+      summary: Get a specific material file
+      description: Returns a single material file
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the material.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Succesfully returns the material
+          content:
+            application/json:
+              schema:
+                required:
+                  - uuid
+                  - material
+                properties:
+                  uuid:
+                    type: string
+                  material:
+                    $ref: "#/components/schemas/MaterialSchema"
+        '400':
+          description: The uuid provided is invalid
+        '404':
+          description: The material does not exist
+
+    put:
+      summary: Modify an existing material file
+      description: Modifies any parameter (except uuid) of an material file by completely replacing the definition file. A finer grain method can be set up later.
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the material.
+          schema:
+            type: string
+      requestBody:
+        description: A material JSON filer with a uuid key.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MaterialSchema"
+
+      responses:
+        '200':
+          description: Everything went smooth and well
+        '400':
+          description: Bad request, something went wrong... :(
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+    delete:
+      summary: Delete an existing material file
+      description: Delete an material file in the database specifying the uuid of the file
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the material.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File succesfully deleted
+        '400':
+          description: Bad request, something went wrong... :(
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: File not found
+
+
+
+components:
+  schemas:
+    MaterialSchema:
+      properties:
+        type:
+          description: The type of material
+          type: string
+        material:
+          oneOf:
+            - $ref: "#/components/schemas/TransluscentMaterial"
+            - $ref: "#/components/schemas/OpaqueMaterial"
+            - $ref: "#/components/schemas/LightSourceMaterial"
+            - $ref: "#/components/schemas/BSDFMaterial"
+      example:
+        type: opaque
+        material:
+          name: HoneyComb
+          type: plastic
+          r_reflectance: 0.4
+          g_reflectance: 0.5
+          b_reflectance: 0.2
+          refraction: 0.4
+          specularity: 0.01
+          roughness: 0.03
+          modifier: void
+
+    TransluscentMaterial:
+      properties:
+        name:
+          description: Name of the material
+          type: string
+        r_transmittance:
+          description: Transmittance for red
+          type: number
+          minimum: 0
+          maximum: 1
+        g_transmittance:
+          description: Transmittance for green
+          type: number
+          minimum: 0
+          maximum: 1
+        b_transmittance:
+          description: Transmittance for blue
+          type: number
+          minimum: 0
+          maximum: 1
+        refraction:
+          description: Index of refraction
+          type: number
+          minimum: 0
+          maximum: 1
+        modifier:
+          type: string
+          default: void
+
+    OpaqueMaterial:
+      properties:
+        name:
+          description: Name of the material
+          type: string
+        type:
+          description: Material type
+          type: string
+          enum: [metal, plastic]
+        r_reflectance:
+          description: Reflectance for red
+          type: number
+          minimum: 0
+          maximum: 1
+        g_reflectance:
+          description: Reflectance for green
+          type: number
+          minimum: 0
+          maximum: 1
+        b_reflectance:
+          description: Reflectance for blue
+          type: number
+          minimum: 0
+          maximum: 1
+        refraction:
+          description: Index of refraction
+          type: number
+          minimum: 0
+          maximum: 1
+        specularity:
+          description: Material specularity
+          type: number
+        roughness:
+          description: Material roughness
+          type: number
+        modifier:
+          type: string
+          default: void
+
+    LightSourceMaterial:
+      properties:
+        name:
+          description: Name of the material
+          type: string
+        red:
+          description: A positive value for the Red channel of the glow
+          type: number
+          minimum: 0
+          maximum: 1
+        green:
+          description: A positive value for the Green channel of the glow
+          type: number
+          minimum: 0
+          maximum: 1
+        blue:
+          description: A positive value for the Blue channel of the glow
+          type: number
+          minimum: 0
+          maximum: 1
+        radius:
+          description: Maximum radius for shadow testing
+          type: number
+        modifier:
+          type: string
+          default: void
+
+    BSDFMaterial:
+      properties:
+        name:
+          description: Name of the material
+          type: string
+        xml_data:
+          description: A string of the original XML
+          type: string
+        up_orientation:
+          type: number
+        thickness:
+          type: number
+        modifier:
+          type: string
+          default: void
+
+    QueryParameters:
+      properties:
+        type:
+          type: string
+          example: The type of something the Definition is
