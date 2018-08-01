@@ -16,7 +16,7 @@ import re  # noqa: F401
 
 import six
 
-from swagger_client.models.location_schema import LocationSchema  # noqa: F401,E501
+from swagger_client.models.epw_location_schema import EpwLocationSchema  # noqa: F401,E501
 
 
 class SkySchema(object):
@@ -33,7 +33,7 @@ class SkySchema(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'location': 'LocationSchema',
+        'location': 'EpwLocationSchema',
         'hour': 'int',
         'day': 'int',
         'month': 'int',
@@ -80,7 +80,7 @@ class SkySchema(object):
 
 
         :return: The location of this SkySchema.  # noqa: E501
-        :rtype: LocationSchema
+        :rtype: EpwLocationSchema
         """
         return self._location
 
@@ -90,7 +90,7 @@ class SkySchema(object):
 
 
         :param location: The location of this SkySchema.  # noqa: E501
-        :type: LocationSchema
+        :type: EpwLocationSchema
         """
 
         self._location = location

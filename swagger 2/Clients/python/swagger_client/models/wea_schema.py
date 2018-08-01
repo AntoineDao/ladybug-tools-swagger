@@ -16,8 +16,8 @@ import re  # noqa: F401
 
 import six
 
-from swagger_client.models.data_collection import DataCollection  # noqa: F401,E501
-from swagger_client.models.location import Location  # noqa: F401,E501
+from swagger_client.models.data_collection_schema import DataCollectionSchema  # noqa: F401,E501
+from swagger_client.models.epw_location_schema import EpwLocationSchema  # noqa: F401,E501
 
 
 class WeaSchema(object):
@@ -35,9 +35,9 @@ class WeaSchema(object):
     """
     swagger_types = {
         'header': 'list[str]',
-        'location': 'Location',
-        'direct_normal_radiation': 'DataCollection',
-        'diffuse_horizontal_radiation': 'DataCollection'
+        'location': 'EpwLocationSchema',
+        'direct_normal_radiation': 'DataCollectionSchema',
+        'diffuse_horizontal_radiation': 'DataCollectionSchema'
     }
 
     attribute_map = {
@@ -92,7 +92,7 @@ class WeaSchema(object):
 
 
         :return: The location of this WeaSchema.  # noqa: E501
-        :rtype: Location
+        :rtype: EpwLocationSchema
         """
         return self._location
 
@@ -102,7 +102,7 @@ class WeaSchema(object):
 
 
         :param location: The location of this WeaSchema.  # noqa: E501
-        :type: Location
+        :type: EpwLocationSchema
         """
         if location is None:
             raise ValueError("Invalid value for `location`, must not be `None`")  # noqa: E501
@@ -115,7 +115,7 @@ class WeaSchema(object):
 
 
         :return: The direct_normal_radiation of this WeaSchema.  # noqa: E501
-        :rtype: DataCollection
+        :rtype: DataCollectionSchema
         """
         return self._direct_normal_radiation
 
@@ -125,7 +125,7 @@ class WeaSchema(object):
 
 
         :param direct_normal_radiation: The direct_normal_radiation of this WeaSchema.  # noqa: E501
-        :type: DataCollection
+        :type: DataCollectionSchema
         """
 
         self._direct_normal_radiation = direct_normal_radiation
@@ -136,7 +136,7 @@ class WeaSchema(object):
 
 
         :return: The diffuse_horizontal_radiation of this WeaSchema.  # noqa: E501
-        :rtype: DataCollection
+        :rtype: DataCollectionSchema
         """
         return self._diffuse_horizontal_radiation
 
@@ -146,7 +146,7 @@ class WeaSchema(object):
 
 
         :param diffuse_horizontal_radiation: The diffuse_horizontal_radiation of this WeaSchema.  # noqa: E501
-        :type: DataCollection
+        :type: DataCollectionSchema
         """
 
         self._diffuse_horizontal_radiation = diffuse_horizontal_radiation

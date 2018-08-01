@@ -3,8 +3,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Query** | **Object** |  | [optional] 
-**Results** | [**List&lt;GridBasedRecipeSchema&gt;**](GridBasedRecipeSchema.md) |  | [optional] 
+**Results** | [**List&lt;InlineResponse200Results&gt;**](InlineResponse200Results.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

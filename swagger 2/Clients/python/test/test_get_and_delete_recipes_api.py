@@ -46,7 +46,7 @@ class TestGetAndDeleteRecipesApi(unittest.TestCase):
     def test_recipe_uuid_get(self):
         """Test case for recipe_uuid_get
 
-        Get a specific analysis_grid file  # noqa: E501
+        Get a specific analysis_grid object  # noqa: E501
         """
         pass
 

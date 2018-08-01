@@ -16,7 +16,7 @@ class AnalysisGridSchema(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, name: str=None, analysis_points: List[AnalysisPointSchema]=None, window_groups: List[ERRORUNKNOWN]=None):  # noqa: E501
+    def __init__(self, name: str=None, analysis_points: List[AnalysisPointSchema]=None, window_groups: List[str]=None):  # noqa: E501
         """AnalysisGridSchema - a model defined in Swagger
 
         :param name: The name of this AnalysisGridSchema.  # noqa: E501
@@ -24,12 +24,12 @@ class AnalysisGridSchema(Model):
         :param analysis_points: The analysis_points of this AnalysisGridSchema.  # noqa: E501
         :type analysis_points: List[AnalysisPointSchema]
         :param window_groups: The window_groups of this AnalysisGridSchema.  # noqa: E501
-        :type window_groups: List[ERRORUNKNOWN]
+        :type window_groups: List[str]
         """
         self.swagger_types = {
             'name': str,
             'analysis_points': List[AnalysisPointSchema],
-            'window_groups': List[ERRORUNKNOWN]
+            'window_groups': List[str]
         }
 
         self.attribute_map = {
@@ -98,22 +98,22 @@ class AnalysisGridSchema(Model):
         self._analysis_points = analysis_points
 
     @property
-    def window_groups(self) -> List[ERRORUNKNOWN]:
+    def window_groups(self) -> List[str]:
         """Gets the window_groups of this AnalysisGridSchema.
 
 
         :return: The window_groups of this AnalysisGridSchema.
-        :rtype: List[ERRORUNKNOWN]
+        :rtype: List[str]
         """
         return self._window_groups
 
     @window_groups.setter
-    def window_groups(self, window_groups: List[ERRORUNKNOWN]):
+    def window_groups(self, window_groups: List[str]):
         """Sets the window_groups of this AnalysisGridSchema.
 
 
         :param window_groups: The window_groups of this AnalysisGridSchema.
-        :type window_groups: List[ERRORUNKNOWN]
+        :type window_groups: List[str]
         """
 
         self._window_groups = window_groups

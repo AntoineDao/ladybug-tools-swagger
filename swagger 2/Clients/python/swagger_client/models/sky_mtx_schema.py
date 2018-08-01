@@ -16,7 +16,7 @@ import re  # noqa: F401
 
 import six
 
-from swagger_client.models.hoys_schema import HoysSchema  # noqa: F401,E501
+from swagger_client.models.hoy_list_schema import HoyListSchema  # noqa: F401,E501
 from swagger_client.models.wea_schema import WeaSchema  # noqa: F401,E501
 
 
@@ -37,7 +37,7 @@ class SkyMtxSchema(object):
         'wea': 'WeaSchema',
         'sky_density': 'int',
         'north': 'float',
-        'hoys': 'HoysSchema',
+        'hoys': 'HoyListSchema',
         'mode': 'int',
         'suffix': 'str'
     }
@@ -152,7 +152,7 @@ class SkyMtxSchema(object):
 
 
         :return: The hoys of this SkyMtxSchema.  # noqa: E501
-        :rtype: HoysSchema
+        :rtype: HoyListSchema
         """
         return self._hoys
 
@@ -162,7 +162,7 @@ class SkyMtxSchema(object):
 
 
         :param hoys: The hoys of this SkyMtxSchema.  # noqa: E501
-        :type: HoysSchema
+        :type: HoyListSchema
         """
 
         self._hoys = hoys

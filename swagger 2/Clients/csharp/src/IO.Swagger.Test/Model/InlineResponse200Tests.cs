@@ -67,14 +67,6 @@ namespace IO.Swagger.Test
 
 
         /// <summary>
-        /// Test the property 'Query'
-        /// </summary>
-        [Test]
-        public void QueryTest()
-        {
-            // TODO unit test for the property 'Query'
-        }
-        /// <summary>
         /// Test the property 'Results'
         /// </summary>
         [Test]

@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 **Wea** | [**WeaSchema**](WeaSchema.md) |  | [optional] 
 **SkyDensity** | **int?** | 1 - Tregenza Sky, 2 - Reinhart Sky, etc. (Default - 1) | [optional] 
 **North** | **decimal?** | angle in degrees between 0-360 to indicate North | [optional] 
-**Hoys** | [**HoysSchema**](HoysSchema.md) |  | [optional] 
+**Hoys** | [**HoyListSchema**](HoyListSchema.md) |  | [optional] 
 **Mode** | **int?** | sky mode | [optional] 
 **Suffix** | **string** | Suffix for the sky matrix | [optional] 
 

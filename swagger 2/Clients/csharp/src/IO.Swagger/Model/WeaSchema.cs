@@ -42,7 +42,7 @@ namespace IO.Swagger.Model
         /// <param name="Location">Location (required).</param>
         /// <param name="DirectNormalRadiation">DirectNormalRadiation.</param>
         /// <param name="DiffuseHorizontalRadiation">DiffuseHorizontalRadiation.</param>
-        public WeaSchema(List<string> Header = default(List<string>), Location Location = default(Location), DataCollection DirectNormalRadiation = default(DataCollection), DataCollection DiffuseHorizontalRadiation = default(DataCollection))
+        public WeaSchema(List<string> Header = default(List<string>), EpwLocationSchema Location = default(EpwLocationSchema), DataCollectionSchema DirectNormalRadiation = default(DataCollectionSchema), DataCollectionSchema DiffuseHorizontalRadiation = default(DataCollectionSchema))
         {
             // to ensure "Header" is required (not null)
             if (Header == null)
@@ -76,19 +76,19 @@ namespace IO.Swagger.Model
         /// Gets or Sets Location
         /// </summary>
         [DataMember(Name="location", EmitDefaultValue=false)]
-        public Location Location { get; set; }
+        public EpwLocationSchema Location { get; set; }
 
         /// <summary>
         /// Gets or Sets DirectNormalRadiation
         /// </summary>
         [DataMember(Name="direct_normal_radiation", EmitDefaultValue=false)]
-        public DataCollection DirectNormalRadiation { get; set; }
+        public DataCollectionSchema DirectNormalRadiation { get; set; }
 
         /// <summary>
         /// Gets or Sets DiffuseHorizontalRadiation
         /// </summary>
         [DataMember(Name="diffuse_horizontal_radiation", EmitDefaultValue=false)]
-        public DataCollection DiffuseHorizontalRadiation { get; set; }
+        public DataCollectionSchema DiffuseHorizontalRadiation { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

@@ -36,7 +36,7 @@ namespace IO.Swagger.Model
         /// <param name="Name">The name of the grid.</param>
         /// <param name="AnalysisPoints">AnalysisPoints.</param>
         /// <param name="WindowGroups">WindowGroups.</param>
-        public AnalysisGridSchema(string Name = default(string), List<AnalysisPointSchema> AnalysisPoints = default(List<AnalysisPointSchema>), List<> WindowGroups = default(List<>))
+        public AnalysisGridSchema(string Name = default(string), List<AnalysisPointSchema> AnalysisPoints = default(List<AnalysisPointSchema>), List<string> WindowGroups = default(List<string>))
         {
             this.Name = Name;
             this.AnalysisPoints = AnalysisPoints;
@@ -60,7 +60,7 @@ namespace IO.Swagger.Model
         /// Gets or Sets WindowGroups
         /// </summary>
         [DataMember(Name="window_groups", EmitDefaultValue=false)]
-        public List<> WindowGroups { get; set; }
+        public List<string> WindowGroups { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

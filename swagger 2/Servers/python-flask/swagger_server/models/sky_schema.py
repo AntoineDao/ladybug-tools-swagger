@@ -6,7 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.location_schema import LocationSchema  # noqa: F401,E501
+from swagger_server.models.epw_location_schema import EpwLocationSchema  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -16,11 +16,11 @@ class SkySchema(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, location: LocationSchema=None, hour: int=None, day: int=None, month: int=None, north: float=None, sky_type: int=None):  # noqa: E501
+    def __init__(self, location: EpwLocationSchema=None, hour: int=None, day: int=None, month: int=None, north: float=None, sky_type: int=None):  # noqa: E501
         """SkySchema - a model defined in Swagger
 
         :param location: The location of this SkySchema.  # noqa: E501
-        :type location: LocationSchema
+        :type location: EpwLocationSchema
         :param hour: The hour of this SkySchema.  # noqa: E501
         :type hour: int
         :param day: The day of this SkySchema.  # noqa: E501
@@ -33,7 +33,7 @@ class SkySchema(Model):
         :type sky_type: int
         """
         self.swagger_types = {
-            'location': LocationSchema,
+            'location': EpwLocationSchema,
             'hour': int,
             'day': int,
             'month': int,
@@ -69,22 +69,22 @@ class SkySchema(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def location(self) -> LocationSchema:
+    def location(self) -> EpwLocationSchema:
         """Gets the location of this SkySchema.
 
 
         :return: The location of this SkySchema.
-        :rtype: LocationSchema
+        :rtype: EpwLocationSchema
         """
         return self._location
 
     @location.setter
-    def location(self, location: LocationSchema):
+    def location(self, location: EpwLocationSchema):
         """Sets the location of this SkySchema.
 
 
         :param location: The location of this SkySchema.
-        :type location: LocationSchema
+        :type location: EpwLocationSchema
         """
 
         self._location = location

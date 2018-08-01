@@ -31,16 +31,17 @@ type GetAndDeleteRecipesApiService service
  Retrieves a list of daylight recipe objects for a given filter.
  * @param ctx context.Context for authentication, logging, tracing, etc.
  @param optional (nil or map[string]interface{}) with one or more of:
-     @param "size" (int32) Number of files returned
-     @param "country" (string) Country where definitions should be from
- @return InlineResponse200*/
-func (a *GetAndDeleteRecipesApiService) RecipeGet(ctx context.Context, localVarOptionals map[string]interface{}) (InlineResponse200,  *http.Response, error) {
+     @param "type_" (string) The type of recipe to be retrieved
+     @param "location" (string) The location where the weather sky is generated from (can be country or city, will only work for climate based recipes)
+     @param "state" (string) The state of the recipe on the server (whether it has run, is running, has failed or is on hold)
+ @return InlineResponse2006*/
+func (a *GetAndDeleteRecipesApiService) RecipeGet(ctx context.Context, localVarOptionals map[string]interface{}) (InlineResponse2006,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
 		localVarFileName string
 		localVarFileBytes []byte
-	 	successPayload  InlineResponse200
+	 	successPayload  InlineResponse2006
 	)
 
 	// create path and map variables
@@ -50,18 +51,24 @@ func (a *GetAndDeleteRecipesApiService) RecipeGet(ctx context.Context, localVarO
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if err := typeCheckParameter(localVarOptionals["size"], "int32", "size"); err != nil {
+	if err := typeCheckParameter(localVarOptionals["type_"], "string", "type_"); err != nil {
 		return successPayload, nil, err
 	}
-	if err := typeCheckParameter(localVarOptionals["country"], "string", "country"); err != nil {
+	if err := typeCheckParameter(localVarOptionals["location"], "string", "location"); err != nil {
+		return successPayload, nil, err
+	}
+	if err := typeCheckParameter(localVarOptionals["state"], "string", "state"); err != nil {
 		return successPayload, nil, err
 	}
 
-	if localVarTempParam, localVarOk := localVarOptionals["size"].(int32); localVarOk {
-		localVarQueryParams.Add("size", parameterToString(localVarTempParam, ""))
+	if localVarTempParam, localVarOk := localVarOptionals["type_"].(string); localVarOk {
+		localVarQueryParams.Add("type", parameterToString(localVarTempParam, ""))
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["country"].(string); localVarOk {
-		localVarQueryParams.Add("country", parameterToString(localVarTempParam, ""))
+	if localVarTempParam, localVarOk := localVarOptionals["location"].(string); localVarOk {
+		localVarQueryParams.Add("location", parameterToString(localVarTempParam, ""))
+	}
+	if localVarTempParam, localVarOk := localVarOptionals["state"].(string); localVarOk {
+		localVarQueryParams.Add("state", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -105,9 +112,9 @@ func (a *GetAndDeleteRecipesApiService) RecipeGet(ctx context.Context, localVarO
 }
 
 /* GetAndDeleteRecipesApiService Delete an existing recipe object
- Delete an recipe object in the database specifying the uuid of the file
+ Delete an recipe object in the database specifying the uuid of the object
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param uuid The unique identifier of the recipe.
+ @param uuid The unique identifier of the analysis_grid.
  @return */
 func (a *GetAndDeleteRecipesApiService) RecipeUuidDelete(ctx context.Context, uuid string) ( *http.Response, error) {
 	var (
@@ -162,8 +169,8 @@ func (a *GetAndDeleteRecipesApiService) RecipeUuidDelete(ctx context.Context, uu
 	return localVarHttpResponse, err
 }
 
-/* GetAndDeleteRecipesApiService Get a specific analysis_grid file
- Returns a single analysis_grid file
+/* GetAndDeleteRecipesApiService Get a specific analysis_grid object
+ Returns a single analysis_grid object
  * @param ctx context.Context for authentication, logging, tracing, etc.
  @param uuid The unique identifier of the analysis_grid.
  @return GridBasedRecipeSchema*/

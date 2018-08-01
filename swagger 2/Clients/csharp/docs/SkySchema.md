@@ -3,7 +3,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Location** | [**LocationSchema**](LocationSchema.md) |  | [optional] 
+**Location** | [**EpwLocationSchema**](EpwLocationSchema.md) |  | [optional] 
 **Hour** | **int?** | hour of the day - minvalue 0 and max value 23 | [optional] 
 **Day** | **int?** | day of the month - minvalue 1 and max value 31 | [optional] 
 **Month** | **int?** | month of the year - minvalue 1 and max value 12 | [optional] 

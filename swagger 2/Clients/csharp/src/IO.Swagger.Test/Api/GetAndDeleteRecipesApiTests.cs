@@ -71,10 +71,11 @@ namespace IO.Swagger.Test
         public void RecipeGetTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //int? size = null;
-            //string country = null;
-            //var response = instance.RecipeGet(size, country);
-            //Assert.IsInstanceOf<InlineResponse200> (response, "response is InlineResponse200");
+            //string type = null;
+            //string location = null;
+            //string state = null;
+            //var response = instance.RecipeGet(type, location, state);
+            //Assert.IsInstanceOf<InlineResponse2006> (response, "response is InlineResponse2006");
         }
         
         /// <summary>

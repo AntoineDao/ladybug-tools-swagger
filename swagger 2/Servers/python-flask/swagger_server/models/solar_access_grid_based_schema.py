@@ -7,9 +7,9 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.analysis_grid_schema import AnalysisGridSchema  # noqa: F401,E501
+from swagger_server.models.epw_location_schema import EpwLocationSchema  # noqa: F401,E501
 from swagger_server.models.hb_surface_schema import HBSurfaceSchema  # noqa: F401,E501
-from swagger_server.models.hoys_schema import HoysSchema  # noqa: F401,E501
-from swagger_server.models.location_schema import LocationSchema  # noqa: F401,E501
+from swagger_server.models.hoy_list_schema import HoyListSchema  # noqa: F401,E501
 from swagger_server.models.vector_schema import VectorSchema  # noqa: F401,E501
 from swagger_server import util
 
@@ -20,7 +20,7 @@ class SolarAccessGridBasedSchema(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, type: str=None, analysis_grids: List[AnalysisGridSchema]=None, surfaces: List[HBSurfaceSchema]=None, location: LocationSchema=None, hoys: HoysSchema=None, sun_vectors: List[VectorSchema]=None):  # noqa: E501
+    def __init__(self, id: str=None, type: str=None, analysis_grids: List[AnalysisGridSchema]=None, surfaces: List[HBSurfaceSchema]=None, location: EpwLocationSchema=None, hoys: HoyListSchema=None, sun_vectors: List[VectorSchema]=None):  # noqa: E501
         """SolarAccessGridBasedSchema - a model defined in Swagger
 
         :param id: The id of this SolarAccessGridBasedSchema.  # noqa: E501
@@ -32,9 +32,9 @@ class SolarAccessGridBasedSchema(Model):
         :param surfaces: The surfaces of this SolarAccessGridBasedSchema.  # noqa: E501
         :type surfaces: List[HBSurfaceSchema]
         :param location: The location of this SolarAccessGridBasedSchema.  # noqa: E501
-        :type location: LocationSchema
+        :type location: EpwLocationSchema
         :param hoys: The hoys of this SolarAccessGridBasedSchema.  # noqa: E501
-        :type hoys: HoysSchema
+        :type hoys: HoyListSchema
         :param sun_vectors: The sun_vectors of this SolarAccessGridBasedSchema.  # noqa: E501
         :type sun_vectors: List[VectorSchema]
         """
@@ -43,8 +43,8 @@ class SolarAccessGridBasedSchema(Model):
             'type': str,
             'analysis_grids': List[AnalysisGridSchema],
             'surfaces': List[HBSurfaceSchema],
-            'location': LocationSchema,
-            'hoys': HoysSchema,
+            'location': EpwLocationSchema,
+            'hoys': HoyListSchema,
             'sun_vectors': List[VectorSchema]
         }
 
@@ -174,43 +174,43 @@ class SolarAccessGridBasedSchema(Model):
         self._surfaces = surfaces
 
     @property
-    def location(self) -> LocationSchema:
+    def location(self) -> EpwLocationSchema:
         """Gets the location of this SolarAccessGridBasedSchema.
 
 
         :return: The location of this SolarAccessGridBasedSchema.
-        :rtype: LocationSchema
+        :rtype: EpwLocationSchema
         """
         return self._location
 
     @location.setter
-    def location(self, location: LocationSchema):
+    def location(self, location: EpwLocationSchema):
         """Sets the location of this SolarAccessGridBasedSchema.
 
 
         :param location: The location of this SolarAccessGridBasedSchema.
-        :type location: LocationSchema
+        :type location: EpwLocationSchema
         """
 
         self._location = location
 
     @property
-    def hoys(self) -> HoysSchema:
+    def hoys(self) -> HoyListSchema:
         """Gets the hoys of this SolarAccessGridBasedSchema.
 
 
         :return: The hoys of this SolarAccessGridBasedSchema.
-        :rtype: HoysSchema
+        :rtype: HoyListSchema
         """
         return self._hoys
 
     @hoys.setter
-    def hoys(self, hoys: HoysSchema):
+    def hoys(self, hoys: HoyListSchema):
         """Sets the hoys of this SolarAccessGridBasedSchema.
 
 
         :param hoys: The hoys of this SolarAccessGridBasedSchema.
-        :type hoys: HoysSchema
+        :type hoys: HoyListSchema
         """
 
         self._hoys = hoys

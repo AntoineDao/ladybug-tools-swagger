@@ -6,7 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.hoys_schema import HoysSchema  # noqa: F401,E501
+from swagger_server.models.hoy_list_schema import HoyListSchema  # noqa: F401,E501
 from swagger_server.models.wea_schema import WeaSchema  # noqa: F401,E501
 from swagger_server import util
 
@@ -17,7 +17,7 @@ class SkyMtxSchema(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, wea: WeaSchema=None, sky_density: int=None, north: float=None, hoys: HoysSchema=None, mode: int=None, suffix: str=None):  # noqa: E501
+    def __init__(self, wea: WeaSchema=None, sky_density: int=None, north: float=None, hoys: HoyListSchema=None, mode: int=None, suffix: str=None):  # noqa: E501
         """SkyMtxSchema - a model defined in Swagger
 
         :param wea: The wea of this SkyMtxSchema.  # noqa: E501
@@ -27,7 +27,7 @@ class SkyMtxSchema(Model):
         :param north: The north of this SkyMtxSchema.  # noqa: E501
         :type north: float
         :param hoys: The hoys of this SkyMtxSchema.  # noqa: E501
-        :type hoys: HoysSchema
+        :type hoys: HoyListSchema
         :param mode: The mode of this SkyMtxSchema.  # noqa: E501
         :type mode: int
         :param suffix: The suffix of this SkyMtxSchema.  # noqa: E501
@@ -37,7 +37,7 @@ class SkyMtxSchema(Model):
             'wea': WeaSchema,
             'sky_density': int,
             'north': float,
-            'hoys': HoysSchema,
+            'hoys': HoyListSchema,
             'mode': int,
             'suffix': str
         }
@@ -141,22 +141,22 @@ class SkyMtxSchema(Model):
         self._north = north
 
     @property
-    def hoys(self) -> HoysSchema:
+    def hoys(self) -> HoyListSchema:
         """Gets the hoys of this SkyMtxSchema.
 
 
         :return: The hoys of this SkyMtxSchema.
-        :rtype: HoysSchema
+        :rtype: HoyListSchema
         """
         return self._hoys
 
     @hoys.setter
-    def hoys(self, hoys: HoysSchema):
+    def hoys(self, hoys: HoyListSchema):
         """Sets the hoys of this SkyMtxSchema.
 
 
         :param hoys: The hoys of this SkyMtxSchema.
-        :type hoys: HoysSchema
+        :type hoys: HoyListSchema
         """
 
         self._hoys = hoys

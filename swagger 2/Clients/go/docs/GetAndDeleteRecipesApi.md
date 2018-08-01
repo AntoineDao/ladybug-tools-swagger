@@ -6,11 +6,11 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**RecipeGet**](GetAndDeleteRecipesApi.md#RecipeGet) | **Get** /recipe/ | Get a list of daylight recipe objects
 [**RecipeUuidDelete**](GetAndDeleteRecipesApi.md#RecipeUuidDelete) | **Delete** /recipe/{uuid} | Delete an existing recipe object
-[**RecipeUuidGet**](GetAndDeleteRecipesApi.md#RecipeUuidGet) | **Get** /recipe/{uuid} | Get a specific analysis_grid file
+[**RecipeUuidGet**](GetAndDeleteRecipesApi.md#RecipeUuidGet) | **Get** /recipe/{uuid} | Get a specific analysis_grid object
 
 
 # **RecipeGet**
-> InlineResponse200 RecipeGet(ctx, optional)
+> InlineResponse2006 RecipeGet(ctx, optional)
 Get a list of daylight recipe objects
 
 Retrieves a list of daylight recipe objects for a given filter.
@@ -27,12 +27,13 @@ Optional parameters are passed through a map[string]interface{}.
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **size** | **int32**| Number of files returned | 
- **country** | **string**| Country where definitions should be from | 
+ **type_** | **string**| The type of recipe to be retrieved | 
+ **location** | **string**| The location where the weather sky is generated from (can be country or city, will only work for climate based recipes) | 
+ **state** | **string**| The state of the recipe on the server (whether it has run, is running, has failed or is on hold) | 
 
 ### Return type
 
-[**InlineResponse200**](inline_response_200.md)
+[**InlineResponse2006**](inline_response_200_6.md)
 
 ### Authorization
 
@@ -49,14 +50,14 @@ No authorization required
 > RecipeUuidDelete(ctx, uuid)
 Delete an existing recipe object
 
-Delete an recipe object in the database specifying the uuid of the file
+Delete an recipe object in the database specifying the uuid of the object
 
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **uuid** | **string**| The unique identifier of the recipe. | 
+  **uuid** | **string**| The unique identifier of the analysis_grid. | 
 
 ### Return type
 
@@ -75,9 +76,9 @@ No authorization required
 
 # **RecipeUuidGet**
 > GridBasedRecipeSchema RecipeUuidGet(ctx, uuid)
-Get a specific analysis_grid file
+Get a specific analysis_grid object
 
-Returns a single analysis_grid file
+Returns a single analysis_grid object
 
 ### Required Parameters
 

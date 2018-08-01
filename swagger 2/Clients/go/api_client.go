@@ -43,15 +43,24 @@ type APIClient struct {
 	common 	service 		// Reuse a single struct instead of allocating one for each service on the heap.
 
 	 // API Services
-	AnnualApi	*AnnualApiService
-	DaylightFactorApi	*DaylightFactorApiService
-	DirectReflectionApi	*DirectReflectionApiService
-	FivePhaseApi	*FivePhaseApiService
+	AnalysisGridApi	*AnalysisGridApiService
+	AnnualRecipeApi	*AnnualRecipeApiService
+	BSDFMaterialApi	*BSDFMaterialApiService
+	DaylightFactorRecipeApi	*DaylightFactorRecipeApiService
+	DirectReflectionRecipeApi	*DirectReflectionRecipeApiService
+	EPWApi	*EPWApiService
+	FivePhaseRecipeApi	*FivePhaseRecipeApiService
+	GetAndDeleteMaterialsApi	*GetAndDeleteMaterialsApiService
 	GetAndDeleteRecipesApi	*GetAndDeleteRecipesApiService
-	PointInTimeApi	*PointInTimeApiService
-	RadiationApi	*RadiationApiService
-	SolarAccessApi	*SolarAccessApiService
-	ThreePhaseApi	*ThreePhaseApiService
+	HoneybeeSurfaceApi	*HoneybeeSurfaceApiService
+	LightSourceMaterialApi	*LightSourceMaterialApiService
+	OpaqueMaterialApi	*OpaqueMaterialApiService
+	PointInTimeRecipeApi	*PointInTimeRecipeApiService
+	RadiationRecipeApi	*RadiationRecipeApiService
+	SolarAccessRecipeApi	*SolarAccessRecipeApiService
+	ThreePhaseRecipeApi	*ThreePhaseRecipeApiService
+	TranslucentMaterialApi	*TranslucentMaterialApiService
+	WEAApi	*WEAApiService
 }
 
 type service struct {
@@ -70,15 +79,24 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
-	c.AnnualApi = (*AnnualApiService)(&c.common)
-	c.DaylightFactorApi = (*DaylightFactorApiService)(&c.common)
-	c.DirectReflectionApi = (*DirectReflectionApiService)(&c.common)
-	c.FivePhaseApi = (*FivePhaseApiService)(&c.common)
+	c.AnalysisGridApi = (*AnalysisGridApiService)(&c.common)
+	c.AnnualRecipeApi = (*AnnualRecipeApiService)(&c.common)
+	c.BSDFMaterialApi = (*BSDFMaterialApiService)(&c.common)
+	c.DaylightFactorRecipeApi = (*DaylightFactorRecipeApiService)(&c.common)
+	c.DirectReflectionRecipeApi = (*DirectReflectionRecipeApiService)(&c.common)
+	c.EPWApi = (*EPWApiService)(&c.common)
+	c.FivePhaseRecipeApi = (*FivePhaseRecipeApiService)(&c.common)
+	c.GetAndDeleteMaterialsApi = (*GetAndDeleteMaterialsApiService)(&c.common)
 	c.GetAndDeleteRecipesApi = (*GetAndDeleteRecipesApiService)(&c.common)
-	c.PointInTimeApi = (*PointInTimeApiService)(&c.common)
-	c.RadiationApi = (*RadiationApiService)(&c.common)
-	c.SolarAccessApi = (*SolarAccessApiService)(&c.common)
-	c.ThreePhaseApi = (*ThreePhaseApiService)(&c.common)
+	c.HoneybeeSurfaceApi = (*HoneybeeSurfaceApiService)(&c.common)
+	c.LightSourceMaterialApi = (*LightSourceMaterialApiService)(&c.common)
+	c.OpaqueMaterialApi = (*OpaqueMaterialApiService)(&c.common)
+	c.PointInTimeRecipeApi = (*PointInTimeRecipeApiService)(&c.common)
+	c.RadiationRecipeApi = (*RadiationRecipeApiService)(&c.common)
+	c.SolarAccessRecipeApi = (*SolarAccessRecipeApiService)(&c.common)
+	c.ThreePhaseRecipeApi = (*ThreePhaseRecipeApiService)(&c.common)
+	c.TranslucentMaterialApi = (*TranslucentMaterialApiService)(&c.common)
+	c.WEAApi = (*WEAApiService)(&c.common)
 
 	return c
 }

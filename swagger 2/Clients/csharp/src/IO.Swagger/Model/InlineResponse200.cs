@@ -33,25 +33,17 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="InlineResponse200" /> class.
         /// </summary>
-        /// <param name="Query">Query.</param>
         /// <param name="Results">Results.</param>
-        public InlineResponse200(Object Query = default(Object), List<GridBasedRecipeSchema> Results = default(List<GridBasedRecipeSchema>))
+        public InlineResponse200(List<InlineResponse200Results> Results = default(List<InlineResponse200Results>))
         {
-            this.Query = Query;
             this.Results = Results;
         }
         
         /// <summary>
-        /// Gets or Sets Query
-        /// </summary>
-        [DataMember(Name="query", EmitDefaultValue=false)]
-        public Object Query { get; set; }
-
-        /// <summary>
         /// Gets or Sets Results
         /// </summary>
         [DataMember(Name="results", EmitDefaultValue=false)]
-        public List<GridBasedRecipeSchema> Results { get; set; }
+        public List<InlineResponse200Results> Results { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -61,7 +53,6 @@ namespace IO.Swagger.Model
         {
             var sb = new StringBuilder();
             sb.Append("class InlineResponse200 {\n");
-            sb.Append("  Query: ").Append(Query).Append("\n");
             sb.Append("  Results: ").Append(Results).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -98,11 +89,6 @@ namespace IO.Swagger.Model
 
             return 
                 (
-                    this.Query == input.Query ||
-                    (this.Query != null &&
-                    this.Query.Equals(input.Query))
-                ) && 
-                (
                     this.Results == input.Results ||
                     this.Results != null &&
                     this.Results.SequenceEqual(input.Results)
@@ -118,8 +104,6 @@ namespace IO.Swagger.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Query != null)
-                    hashCode = hashCode * 59 + this.Query.GetHashCode();
                 if (this.Results != null)
                     hashCode = hashCode * 59 + this.Results.GetHashCode();
                 return hashCode;

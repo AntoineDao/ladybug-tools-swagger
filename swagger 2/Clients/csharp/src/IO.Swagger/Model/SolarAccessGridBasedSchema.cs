@@ -78,7 +78,7 @@ namespace IO.Swagger.Model
         /// <param name="Location">Location.</param>
         /// <param name="Hoys">Hoys.</param>
         /// <param name="SunVectors">A list of vectors if location is not provided.</param>
-        public SolarAccessGridBasedSchema(IdEnum? Id = default(IdEnum?), TypeEnum? Type = default(TypeEnum?), List<AnalysisGridSchema> AnalysisGrids = default(List<AnalysisGridSchema>), List<HBSurfaceSchema> Surfaces = default(List<HBSurfaceSchema>), LocationSchema Location = default(LocationSchema), HoysSchema Hoys = default(HoysSchema), List<VectorSchema> SunVectors = default(List<VectorSchema>))
+        public SolarAccessGridBasedSchema(IdEnum? Id = default(IdEnum?), TypeEnum? Type = default(TypeEnum?), List<AnalysisGridSchema> AnalysisGrids = default(List<AnalysisGridSchema>), List<HBSurfaceSchema> Surfaces = default(List<HBSurfaceSchema>), EpwLocationSchema Location = default(EpwLocationSchema), HoyListSchema Hoys = default(HoyListSchema), List<VectorSchema> SunVectors = default(List<VectorSchema>))
         {
             this.Id = Id;
             this.Type = Type;
@@ -107,13 +107,13 @@ namespace IO.Swagger.Model
         /// Gets or Sets Location
         /// </summary>
         [DataMember(Name="location", EmitDefaultValue=false)]
-        public LocationSchema Location { get; set; }
+        public EpwLocationSchema Location { get; set; }
 
         /// <summary>
         /// Gets or Sets Hoys
         /// </summary>
         [DataMember(Name="hoys", EmitDefaultValue=false)]
-        public HoysSchema Hoys { get; set; }
+        public HoyListSchema Hoys { get; set; }
 
         /// <summary>
         /// A list of vectors if location is not provided

@@ -39,7 +39,7 @@ namespace IO.Swagger.Model
         /// <param name="Month">month of the year - minvalue 1 and max value 12.</param>
         /// <param name="North">angle in degrees between 0-360 to indicate North.</param>
         /// <param name="SkyType">0 - Sunny with sun, 1 - sunny without sun, 2 - intermediate with sun, 3 - intermediate without sun, 4 - cloudy sky, 5 - uniform sky.</param>
-        public SkySchema(LocationSchema Location = default(LocationSchema), int? Hour = default(int?), int? Day = default(int?), int? Month = default(int?), decimal? North = default(decimal?), int? SkyType = default(int?))
+        public SkySchema(EpwLocationSchema Location = default(EpwLocationSchema), int? Hour = default(int?), int? Day = default(int?), int? Month = default(int?), decimal? North = default(decimal?), int? SkyType = default(int?))
         {
             this.Location = Location;
             this.Hour = Hour;
@@ -53,7 +53,7 @@ namespace IO.Swagger.Model
         /// Gets or Sets Location
         /// </summary>
         [DataMember(Name="location", EmitDefaultValue=false)]
-        public LocationSchema Location { get; set; }
+        public EpwLocationSchema Location { get; set; }
 
         /// <summary>
         /// hour of the day - minvalue 0 and max value 23

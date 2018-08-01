@@ -12,8 +12,10 @@ The Swagger Editor can also be used to generate Server or Client packages in mul
 
 ## Servers
 * [Python](swagger%202/Servers/python-flask)
-* [Javascript](swagger%202/Servers/javascript)
+* [NodeJs](swagger%202/Servers/nodejs)
+* [Go](swagger%202/Servers/go)
 ## Clients
 * [Python](swagger%202/Clients/python)
+* [NodeJs](swagger%202/Clients/nodejs)
 * [Go](swagger%202/Clients/go)
 * [C#](swagger%202/Clients/csharp)

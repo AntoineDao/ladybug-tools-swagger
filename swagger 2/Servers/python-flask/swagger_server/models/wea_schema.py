@@ -6,8 +6,8 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.data_collection import DataCollection  # noqa: F401,E501
-from swagger_server.models.location import Location  # noqa: F401,E501
+from swagger_server.models.data_collection_schema import DataCollectionSchema  # noqa: F401,E501
+from swagger_server.models.epw_location_schema import EpwLocationSchema  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -17,23 +17,23 @@ class WeaSchema(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, header: List[str]=None, location: Location=None, direct_normal_radiation: DataCollection=None, diffuse_horizontal_radiation: DataCollection=None):  # noqa: E501
+    def __init__(self, header: List[str]=None, location: EpwLocationSchema=None, direct_normal_radiation: DataCollectionSchema=None, diffuse_horizontal_radiation: DataCollectionSchema=None):  # noqa: E501
         """WeaSchema - a model defined in Swagger
 
         :param header: The header of this WeaSchema.  # noqa: E501
         :type header: List[str]
         :param location: The location of this WeaSchema.  # noqa: E501
-        :type location: Location
+        :type location: EpwLocationSchema
         :param direct_normal_radiation: The direct_normal_radiation of this WeaSchema.  # noqa: E501
-        :type direct_normal_radiation: DataCollection
+        :type direct_normal_radiation: DataCollectionSchema
         :param diffuse_horizontal_radiation: The diffuse_horizontal_radiation of this WeaSchema.  # noqa: E501
-        :type diffuse_horizontal_radiation: DataCollection
+        :type diffuse_horizontal_radiation: DataCollectionSchema
         """
         self.swagger_types = {
             'header': List[str],
-            'location': Location,
-            'direct_normal_radiation': DataCollection,
-            'diffuse_horizontal_radiation': DataCollection
+            'location': EpwLocationSchema,
+            'direct_normal_radiation': DataCollectionSchema,
+            'diffuse_horizontal_radiation': DataCollectionSchema
         }
 
         self.attribute_map = {
@@ -83,22 +83,22 @@ class WeaSchema(Model):
         self._header = header
 
     @property
-    def location(self) -> Location:
+    def location(self) -> EpwLocationSchema:
         """Gets the location of this WeaSchema.
 
 
         :return: The location of this WeaSchema.
-        :rtype: Location
+        :rtype: EpwLocationSchema
         """
         return self._location
 
     @location.setter
-    def location(self, location: Location):
+    def location(self, location: EpwLocationSchema):
         """Sets the location of this WeaSchema.
 
 
         :param location: The location of this WeaSchema.
-        :type location: Location
+        :type location: EpwLocationSchema
         """
         if location is None:
             raise ValueError("Invalid value for `location`, must not be `None`")  # noqa: E501
@@ -106,43 +106,43 @@ class WeaSchema(Model):
         self._location = location
 
     @property
-    def direct_normal_radiation(self) -> DataCollection:
+    def direct_normal_radiation(self) -> DataCollectionSchema:
         """Gets the direct_normal_radiation of this WeaSchema.
 
 
         :return: The direct_normal_radiation of this WeaSchema.
-        :rtype: DataCollection
+        :rtype: DataCollectionSchema
         """
         return self._direct_normal_radiation
 
     @direct_normal_radiation.setter
-    def direct_normal_radiation(self, direct_normal_radiation: DataCollection):
+    def direct_normal_radiation(self, direct_normal_radiation: DataCollectionSchema):
         """Sets the direct_normal_radiation of this WeaSchema.
 
 
         :param direct_normal_radiation: The direct_normal_radiation of this WeaSchema.
-        :type direct_normal_radiation: DataCollection
+        :type direct_normal_radiation: DataCollectionSchema
         """
 
         self._direct_normal_radiation = direct_normal_radiation
 
     @property
-    def diffuse_horizontal_radiation(self) -> DataCollection:
+    def diffuse_horizontal_radiation(self) -> DataCollectionSchema:
         """Gets the diffuse_horizontal_radiation of this WeaSchema.
 
 
         :return: The diffuse_horizontal_radiation of this WeaSchema.
-        :rtype: DataCollection
+        :rtype: DataCollectionSchema
         """
         return self._diffuse_horizontal_radiation
 
     @diffuse_horizontal_radiation.setter
-    def diffuse_horizontal_radiation(self, diffuse_horizontal_radiation: DataCollection):
+    def diffuse_horizontal_radiation(self, diffuse_horizontal_radiation: DataCollectionSchema):
         """Sets the diffuse_horizontal_radiation of this WeaSchema.
 
 
         :param diffuse_horizontal_radiation: The diffuse_horizontal_radiation of this WeaSchema.
-        :type diffuse_horizontal_radiation: DataCollection
+        :type diffuse_horizontal_radiation: DataCollectionSchema
         """
 
         self._diffuse_horizontal_radiation = diffuse_horizontal_radiation

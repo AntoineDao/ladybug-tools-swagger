@@ -35,7 +35,7 @@ class AnalysisGridSchema(object):
     swagger_types = {
         'name': 'str',
         'analysis_points': 'list[AnalysisPointSchema]',
-        'window_groups': 'list[ERRORUNKNOWN]'
+        'window_groups': 'list[str]'
     }
 
     attribute_map = {
@@ -109,7 +109,7 @@ class AnalysisGridSchema(object):
 
 
         :return: The window_groups of this AnalysisGridSchema.  # noqa: E501
-        :rtype: list[ERRORUNKNOWN]
+        :rtype: list[str]
         """
         return self._window_groups
 
@@ -119,7 +119,7 @@ class AnalysisGridSchema(object):
 
 
         :param window_groups: The window_groups of this AnalysisGridSchema.  # noqa: E501
-        :type: list[ERRORUNKNOWN]
+        :type: list[str]
         """
 
         self._window_groups = window_groups

@@ -3,12 +3,21 @@ from __future__ import absolute_import
 # flake8: noqa
 
 # import apis into api package
-from swagger_client.api.annual_api import AnnualApi
-from swagger_client.api.daylight_factor_api import DaylightFactorApi
-from swagger_client.api.direct_reflection_api import DirectReflectionApi
-from swagger_client.api.five_phase_api import FivePhaseApi
+from swagger_client.api.analysis_grid_api import AnalysisGridApi
+from swagger_client.api.annual_recipe_api import AnnualRecipeApi
+from swagger_client.api.bsdf_material_api import BSDFMaterialApi
+from swagger_client.api.daylight_factor_recipe_api import DaylightFactorRecipeApi
+from swagger_client.api.direct_reflection_recipe_api import DirectReflectionRecipeApi
+from swagger_client.api.epw_api import EPWApi
+from swagger_client.api.five_phase_recipe_api import FivePhaseRecipeApi
+from swagger_client.api.get_and_delete_materials_api import GetAndDeleteMaterialsApi
 from swagger_client.api.get_and_delete_recipes_api import GetAndDeleteRecipesApi
-from swagger_client.api.point_in_time_api import PointInTimeApi
-from swagger_client.api.radiation_api import RadiationApi
-from swagger_client.api.solar_access_api import SolarAccessApi
-from swagger_client.api.three_phase_api import ThreePhaseApi
+from swagger_client.api.honeybee_surface_api import HoneybeeSurfaceApi
+from swagger_client.api.light_source_material_api import LightSourceMaterialApi
+from swagger_client.api.opaque_material_api import OpaqueMaterialApi
+from swagger_client.api.point_in_time_recipe_api import PointInTimeRecipeApi
+from swagger_client.api.radiation_recipe_api import RadiationRecipeApi
+from swagger_client.api.solar_access_recipe_api import SolarAccessRecipeApi
+from swagger_client.api.three_phase_recipe_api import ThreePhaseRecipeApi
+from swagger_client.api.translucent_material_api import TranslucentMaterialApi
+from swagger_client.api.wea_api import WEAApi

@@ -18,9 +18,9 @@ paths:
       tags:
         - Analysis Grid
       parameters:
-        - $ref: "#/parametersSchema/GridNameParameter"
-        - $ref: "#/parametersSchema/MinPointsParameter"
-        - $ref: "#/parametersSchema/MaxPointsParameter"
+        - $ref: "#/parameters/GridNameParameter"
+        - $ref: "#/parameters/MinPointsParameter"
+        - $ref: "#/parameters/MaxPointsParameter"
 
       responses:
         200:
@@ -141,7 +141,7 @@ paths:
       produces:
         - application/json
       parameters:
-        - $ref: "#/parametersSchema/CountryParameter"
+        - $ref: "#/parameters/CountryParameter"
       responses:
         200:
           description: A list of epws matching the query parameters
@@ -256,9 +256,9 @@ paths:
       tags:
         - Get and Delete Materials
       parameters:
-        - $ref: "#/parametersSchema/MaterialTypeParameter"
-        - $ref: "#/parametersSchema/RGBTransmittanceParameter"
-        - $ref: "#/parametersSchema/RGBReflectanceParameter"
+        - $ref: "#/parameters/MaterialTypeParameter"
+        - $ref: "#/parameters/RGBTransmittanceParameter"
+        - $ref: "#/parameters/RGBReflectanceParameter"
       responses:
         200:
           description: A list of materials matching the query parameters
@@ -546,9 +546,9 @@ paths:
       tags:
         - Get and Delete Recipes
       parameters:
-      - $ref: "#/parametersSchema/RecipeTypeParameter"
-      - $ref: "#/parametersSchema/RecipeLocationParameter"
-      - $ref: "#/parametersSchema/RecipeStateParameter"
+      - $ref: "#/parameters/RecipeTypeParameter"
+      - $ref: "#/parameters/RecipeLocationParameter"
+      - $ref: "#/parameters/RecipeStateParameter"
       responses:
         200:
           description: A list of analysis_grids matching the query parameters
@@ -1055,9 +1055,9 @@ paths:
       tags:
         - Honeybee Surface
       parameters:
-        - $ref: "#/parametersSchema/SurfaceTypeParameter"
-        - $ref: "#/parametersSchema/SurfaceMaterialParameter"
-        - $ref: "#/parametersSchema/SurfaceStateParameter"
+        - $ref: "#/parameters/SurfaceTypeParameter"
+        - $ref: "#/parameters/SurfaceMaterialParameter"
+        - $ref: "#/parameters/SurfaceStateParameter"
       responses:
         200:
           description: A list of hbsurfaces matching the query parameters
@@ -1174,7 +1174,7 @@ paths:
       tags:
         - WEA
       parameters:
-        - $ref: "#/parametersSchema/CountryParameter"
+        - $ref: "#/parameters/CountryParameter"
       responses:
         200:
           description: A list of weas matching the query parameters
@@ -1282,7 +1282,7 @@ paths:
         404:
           description: object not found
 
-parametersSchema:
+parameters:
 # ANALYSIS_GRID_API PARAMETERS
   GridNameParameter:
     name: grid_name

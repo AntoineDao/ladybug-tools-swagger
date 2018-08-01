@@ -17,9 +17,9 @@ import re  # noqa: F401
 import six
 
 from swagger_client.models.analysis_grid_schema import AnalysisGridSchema  # noqa: F401,E501
+from swagger_client.models.epw_location_schema import EpwLocationSchema  # noqa: F401,E501
 from swagger_client.models.hb_surface_schema import HBSurfaceSchema  # noqa: F401,E501
-from swagger_client.models.hoys_schema import HoysSchema  # noqa: F401,E501
-from swagger_client.models.location_schema import LocationSchema  # noqa: F401,E501
+from swagger_client.models.hoy_list_schema import HoyListSchema  # noqa: F401,E501
 from swagger_client.models.vector_schema import VectorSchema  # noqa: F401,E501
 
 
@@ -41,8 +41,8 @@ class SolarAccessGridBasedSchema(object):
         'type': 'str',
         'analysis_grids': 'list[AnalysisGridSchema]',
         'surfaces': 'list[HBSurfaceSchema]',
-        'location': 'LocationSchema',
-        'hoys': 'HoysSchema',
+        'location': 'EpwLocationSchema',
+        'hoys': 'HoyListSchema',
         'sun_vectors': 'list[VectorSchema]'
     }
 
@@ -185,7 +185,7 @@ class SolarAccessGridBasedSchema(object):
 
 
         :return: The location of this SolarAccessGridBasedSchema.  # noqa: E501
-        :rtype: LocationSchema
+        :rtype: EpwLocationSchema
         """
         return self._location
 
@@ -195,7 +195,7 @@ class SolarAccessGridBasedSchema(object):
 
 
         :param location: The location of this SolarAccessGridBasedSchema.  # noqa: E501
-        :type: LocationSchema
+        :type: EpwLocationSchema
         """
 
         self._location = location
@@ -206,7 +206,7 @@ class SolarAccessGridBasedSchema(object):
 
 
         :return: The hoys of this SolarAccessGridBasedSchema.  # noqa: E501
-        :rtype: HoysSchema
+        :rtype: HoyListSchema
         """
         return self._hoys
 
@@ -216,7 +216,7 @@ class SolarAccessGridBasedSchema(object):
 
 
         :param hoys: The hoys of this SolarAccessGridBasedSchema.  # noqa: E501
-        :type: HoysSchema
+        :type: HoyListSchema
         """
 
         self._hoys = hoys

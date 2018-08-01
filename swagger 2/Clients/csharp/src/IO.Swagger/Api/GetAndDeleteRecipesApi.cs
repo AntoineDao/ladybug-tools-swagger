@@ -31,10 +31,11 @@ namespace IO.Swagger.Api
         /// Retrieves a list of daylight recipe objects for a given filter.
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="size">Number of files returned (optional)</param>
-        /// <param name="country">Country where definitions should be from (optional)</param>
-        /// <returns>InlineResponse200</returns>
-        InlineResponse200 RecipeGet (int? size = null, string country = null);
+        /// <param name="type">The type of recipe to be retrieved (optional)</param>
+        /// <param name="location">The location where the weather sky is generated from (can be country or city, will only work for climate based recipes) (optional)</param>
+        /// <param name="state">The state of the recipe on the server (whether it has run, is running, has failed or is on hold) (optional)</param>
+        /// <returns>InlineResponse2006</returns>
+        InlineResponse2006 RecipeGet (string type = null, string location = null, string state = null);
 
         /// <summary>
         /// Get a list of daylight recipe objects
@@ -43,18 +44,19 @@ namespace IO.Swagger.Api
         /// Retrieves a list of daylight recipe objects for a given filter.
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="size">Number of files returned (optional)</param>
-        /// <param name="country">Country where definitions should be from (optional)</param>
-        /// <returns>ApiResponse of InlineResponse200</returns>
-        ApiResponse<InlineResponse200> RecipeGetWithHttpInfo (int? size = null, string country = null);
+        /// <param name="type">The type of recipe to be retrieved (optional)</param>
+        /// <param name="location">The location where the weather sky is generated from (can be country or city, will only work for climate based recipes) (optional)</param>
+        /// <param name="state">The state of the recipe on the server (whether it has run, is running, has failed or is on hold) (optional)</param>
+        /// <returns>ApiResponse of InlineResponse2006</returns>
+        ApiResponse<InlineResponse2006> RecipeGetWithHttpInfo (string type = null, string location = null, string state = null);
         /// <summary>
         /// Delete an existing recipe object
         /// </summary>
         /// <remarks>
-        /// Delete an recipe object in the database specifying the uuid of the file
+        /// Delete an recipe object in the database specifying the uuid of the object
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="uuid">The unique identifier of the recipe.</param>
+        /// <param name="uuid">The unique identifier of the analysis_grid.</param>
         /// <returns></returns>
         void RecipeUuidDelete (string uuid);
 
@@ -62,17 +64,17 @@ namespace IO.Swagger.Api
         /// Delete an existing recipe object
         /// </summary>
         /// <remarks>
-        /// Delete an recipe object in the database specifying the uuid of the file
+        /// Delete an recipe object in the database specifying the uuid of the object
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="uuid">The unique identifier of the recipe.</param>
+        /// <param name="uuid">The unique identifier of the analysis_grid.</param>
         /// <returns>ApiResponse of Object(void)</returns>
         ApiResponse<Object> RecipeUuidDeleteWithHttpInfo (string uuid);
         /// <summary>
-        /// Get a specific analysis_grid file
+        /// Get a specific analysis_grid object
         /// </summary>
         /// <remarks>
-        /// Returns a single analysis_grid file
+        /// Returns a single analysis_grid object
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uuid">The unique identifier of the analysis_grid.</param>
@@ -80,10 +82,10 @@ namespace IO.Swagger.Api
         GridBasedRecipeSchema RecipeUuidGet (string uuid);
 
         /// <summary>
-        /// Get a specific analysis_grid file
+        /// Get a specific analysis_grid object
         /// </summary>
         /// <remarks>
-        /// Returns a single analysis_grid file
+        /// Returns a single analysis_grid object
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uuid">The unique identifier of the analysis_grid.</param>
@@ -98,10 +100,11 @@ namespace IO.Swagger.Api
         /// Retrieves a list of daylight recipe objects for a given filter.
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="size">Number of files returned (optional)</param>
-        /// <param name="country">Country where definitions should be from (optional)</param>
-        /// <returns>Task of InlineResponse200</returns>
-        System.Threading.Tasks.Task<InlineResponse200> RecipeGetAsync (int? size = null, string country = null);
+        /// <param name="type">The type of recipe to be retrieved (optional)</param>
+        /// <param name="location">The location where the weather sky is generated from (can be country or city, will only work for climate based recipes) (optional)</param>
+        /// <param name="state">The state of the recipe on the server (whether it has run, is running, has failed or is on hold) (optional)</param>
+        /// <returns>Task of InlineResponse2006</returns>
+        System.Threading.Tasks.Task<InlineResponse2006> RecipeGetAsync (string type = null, string location = null, string state = null);
 
         /// <summary>
         /// Get a list of daylight recipe objects
@@ -110,18 +113,19 @@ namespace IO.Swagger.Api
         /// Retrieves a list of daylight recipe objects for a given filter.
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="size">Number of files returned (optional)</param>
-        /// <param name="country">Country where definitions should be from (optional)</param>
-        /// <returns>Task of ApiResponse (InlineResponse200)</returns>
-        System.Threading.Tasks.Task<ApiResponse<InlineResponse200>> RecipeGetAsyncWithHttpInfo (int? size = null, string country = null);
+        /// <param name="type">The type of recipe to be retrieved (optional)</param>
+        /// <param name="location">The location where the weather sky is generated from (can be country or city, will only work for climate based recipes) (optional)</param>
+        /// <param name="state">The state of the recipe on the server (whether it has run, is running, has failed or is on hold) (optional)</param>
+        /// <returns>Task of ApiResponse (InlineResponse2006)</returns>
+        System.Threading.Tasks.Task<ApiResponse<InlineResponse2006>> RecipeGetAsyncWithHttpInfo (string type = null, string location = null, string state = null);
         /// <summary>
         /// Delete an existing recipe object
         /// </summary>
         /// <remarks>
-        /// Delete an recipe object in the database specifying the uuid of the file
+        /// Delete an recipe object in the database specifying the uuid of the object
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="uuid">The unique identifier of the recipe.</param>
+        /// <param name="uuid">The unique identifier of the analysis_grid.</param>
         /// <returns>Task of void</returns>
         System.Threading.Tasks.Task RecipeUuidDeleteAsync (string uuid);
 
@@ -129,17 +133,17 @@ namespace IO.Swagger.Api
         /// Delete an existing recipe object
         /// </summary>
         /// <remarks>
-        /// Delete an recipe object in the database specifying the uuid of the file
+        /// Delete an recipe object in the database specifying the uuid of the object
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="uuid">The unique identifier of the recipe.</param>
+        /// <param name="uuid">The unique identifier of the analysis_grid.</param>
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> RecipeUuidDeleteAsyncWithHttpInfo (string uuid);
         /// <summary>
-        /// Get a specific analysis_grid file
+        /// Get a specific analysis_grid object
         /// </summary>
         /// <remarks>
-        /// Returns a single analysis_grid file
+        /// Returns a single analysis_grid object
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uuid">The unique identifier of the analysis_grid.</param>
@@ -147,10 +151,10 @@ namespace IO.Swagger.Api
         System.Threading.Tasks.Task<GridBasedRecipeSchema> RecipeUuidGetAsync (string uuid);
 
         /// <summary>
-        /// Get a specific analysis_grid file
+        /// Get a specific analysis_grid object
         /// </summary>
         /// <remarks>
-        /// Returns a single analysis_grid file
+        /// Returns a single analysis_grid object
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uuid">The unique identifier of the analysis_grid.</param>
@@ -260,12 +264,13 @@ namespace IO.Swagger.Api
         /// Get a list of daylight recipe objects Retrieves a list of daylight recipe objects for a given filter.
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="size">Number of files returned (optional)</param>
-        /// <param name="country">Country where definitions should be from (optional)</param>
-        /// <returns>InlineResponse200</returns>
-        public InlineResponse200 RecipeGet (int? size = null, string country = null)
+        /// <param name="type">The type of recipe to be retrieved (optional)</param>
+        /// <param name="location">The location where the weather sky is generated from (can be country or city, will only work for climate based recipes) (optional)</param>
+        /// <param name="state">The state of the recipe on the server (whether it has run, is running, has failed or is on hold) (optional)</param>
+        /// <returns>InlineResponse2006</returns>
+        public InlineResponse2006 RecipeGet (string type = null, string location = null, string state = null)
         {
-             ApiResponse<InlineResponse200> localVarResponse = RecipeGetWithHttpInfo(size, country);
+             ApiResponse<InlineResponse2006> localVarResponse = RecipeGetWithHttpInfo(type, location, state);
              return localVarResponse.Data;
         }
 
@@ -273,10 +278,11 @@ namespace IO.Swagger.Api
         /// Get a list of daylight recipe objects Retrieves a list of daylight recipe objects for a given filter.
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="size">Number of files returned (optional)</param>
-        /// <param name="country">Country where definitions should be from (optional)</param>
-        /// <returns>ApiResponse of InlineResponse200</returns>
-        public ApiResponse< InlineResponse200 > RecipeGetWithHttpInfo (int? size = null, string country = null)
+        /// <param name="type">The type of recipe to be retrieved (optional)</param>
+        /// <param name="location">The location where the weather sky is generated from (can be country or city, will only work for climate based recipes) (optional)</param>
+        /// <param name="state">The state of the recipe on the server (whether it has run, is running, has failed or is on hold) (optional)</param>
+        /// <returns>ApiResponse of InlineResponse2006</returns>
+        public ApiResponse< InlineResponse2006 > RecipeGetWithHttpInfo (string type = null, string location = null, string state = null)
         {
 
             var localVarPath = "/recipe/";
@@ -299,8 +305,9 @@ namespace IO.Swagger.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (country != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "country", country)); // query parameter
+            if (type != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "type", type)); // query parameter
+            if (location != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "location", location)); // query parameter
+            if (state != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "state", state)); // query parameter
 
 
             // make the HTTP request
@@ -316,21 +323,22 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<InlineResponse200>(localVarStatusCode,
+            return new ApiResponse<InlineResponse2006>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (InlineResponse200) Configuration.ApiClient.Deserialize(localVarResponse, typeof(InlineResponse200)));
+                (InlineResponse2006) Configuration.ApiClient.Deserialize(localVarResponse, typeof(InlineResponse2006)));
         }
 
         /// <summary>
         /// Get a list of daylight recipe objects Retrieves a list of daylight recipe objects for a given filter.
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="size">Number of files returned (optional)</param>
-        /// <param name="country">Country where definitions should be from (optional)</param>
-        /// <returns>Task of InlineResponse200</returns>
-        public async System.Threading.Tasks.Task<InlineResponse200> RecipeGetAsync (int? size = null, string country = null)
+        /// <param name="type">The type of recipe to be retrieved (optional)</param>
+        /// <param name="location">The location where the weather sky is generated from (can be country or city, will only work for climate based recipes) (optional)</param>
+        /// <param name="state">The state of the recipe on the server (whether it has run, is running, has failed or is on hold) (optional)</param>
+        /// <returns>Task of InlineResponse2006</returns>
+        public async System.Threading.Tasks.Task<InlineResponse2006> RecipeGetAsync (string type = null, string location = null, string state = null)
         {
-             ApiResponse<InlineResponse200> localVarResponse = await RecipeGetAsyncWithHttpInfo(size, country);
+             ApiResponse<InlineResponse2006> localVarResponse = await RecipeGetAsyncWithHttpInfo(type, location, state);
              return localVarResponse.Data;
 
         }
@@ -339,10 +347,11 @@ namespace IO.Swagger.Api
         /// Get a list of daylight recipe objects Retrieves a list of daylight recipe objects for a given filter.
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="size">Number of files returned (optional)</param>
-        /// <param name="country">Country where definitions should be from (optional)</param>
-        /// <returns>Task of ApiResponse (InlineResponse200)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<InlineResponse200>> RecipeGetAsyncWithHttpInfo (int? size = null, string country = null)
+        /// <param name="type">The type of recipe to be retrieved (optional)</param>
+        /// <param name="location">The location where the weather sky is generated from (can be country or city, will only work for climate based recipes) (optional)</param>
+        /// <param name="state">The state of the recipe on the server (whether it has run, is running, has failed or is on hold) (optional)</param>
+        /// <returns>Task of ApiResponse (InlineResponse2006)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<InlineResponse2006>> RecipeGetAsyncWithHttpInfo (string type = null, string location = null, string state = null)
         {
 
             var localVarPath = "/recipe/";
@@ -365,8 +374,9 @@ namespace IO.Swagger.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (country != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "country", country)); // query parameter
+            if (type != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "type", type)); // query parameter
+            if (location != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "location", location)); // query parameter
+            if (state != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "state", state)); // query parameter
 
 
             // make the HTTP request
@@ -382,16 +392,16 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<InlineResponse200>(localVarStatusCode,
+            return new ApiResponse<InlineResponse2006>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (InlineResponse200) Configuration.ApiClient.Deserialize(localVarResponse, typeof(InlineResponse200)));
+                (InlineResponse2006) Configuration.ApiClient.Deserialize(localVarResponse, typeof(InlineResponse2006)));
         }
 
         /// <summary>
-        /// Delete an existing recipe object Delete an recipe object in the database specifying the uuid of the file
+        /// Delete an existing recipe object Delete an recipe object in the database specifying the uuid of the object
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="uuid">The unique identifier of the recipe.</param>
+        /// <param name="uuid">The unique identifier of the analysis_grid.</param>
         /// <returns></returns>
         public void RecipeUuidDelete (string uuid)
         {
@@ -399,10 +409,10 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Delete an existing recipe object Delete an recipe object in the database specifying the uuid of the file
+        /// Delete an existing recipe object Delete an recipe object in the database specifying the uuid of the object
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="uuid">The unique identifier of the recipe.</param>
+        /// <param name="uuid">The unique identifier of the analysis_grid.</param>
         /// <returns>ApiResponse of Object(void)</returns>
         public ApiResponse<Object> RecipeUuidDeleteWithHttpInfo (string uuid)
         {
@@ -452,10 +462,10 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Delete an existing recipe object Delete an recipe object in the database specifying the uuid of the file
+        /// Delete an existing recipe object Delete an recipe object in the database specifying the uuid of the object
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="uuid">The unique identifier of the recipe.</param>
+        /// <param name="uuid">The unique identifier of the analysis_grid.</param>
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task RecipeUuidDeleteAsync (string uuid)
         {
@@ -464,10 +474,10 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Delete an existing recipe object Delete an recipe object in the database specifying the uuid of the file
+        /// Delete an existing recipe object Delete an recipe object in the database specifying the uuid of the object
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="uuid">The unique identifier of the recipe.</param>
+        /// <param name="uuid">The unique identifier of the analysis_grid.</param>
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> RecipeUuidDeleteAsyncWithHttpInfo (string uuid)
         {
@@ -517,7 +527,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Get a specific analysis_grid file Returns a single analysis_grid file
+        /// Get a specific analysis_grid object Returns a single analysis_grid object
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uuid">The unique identifier of the analysis_grid.</param>
@@ -529,7 +539,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Get a specific analysis_grid file Returns a single analysis_grid file
+        /// Get a specific analysis_grid object Returns a single analysis_grid object
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uuid">The unique identifier of the analysis_grid.</param>
@@ -582,7 +592,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Get a specific analysis_grid file Returns a single analysis_grid file
+        /// Get a specific analysis_grid object Returns a single analysis_grid object
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uuid">The unique identifier of the analysis_grid.</param>
@@ -595,7 +605,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Get a specific analysis_grid file Returns a single analysis_grid file
+        /// Get a specific analysis_grid object Returns a single analysis_grid object
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uuid">The unique identifier of the analysis_grid.</param>

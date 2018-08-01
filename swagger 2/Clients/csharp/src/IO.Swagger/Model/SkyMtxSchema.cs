@@ -39,7 +39,7 @@ namespace IO.Swagger.Model
         /// <param name="Hoys">Hoys.</param>
         /// <param name="Mode">sky mode.</param>
         /// <param name="Suffix">Suffix for the sky matrix.</param>
-        public SkyMtxSchema(WeaSchema Wea = default(WeaSchema), int? SkyDensity = default(int?), decimal? North = default(decimal?), HoysSchema Hoys = default(HoysSchema), int? Mode = default(int?), string Suffix = default(string))
+        public SkyMtxSchema(WeaSchema Wea = default(WeaSchema), int? SkyDensity = default(int?), decimal? North = default(decimal?), HoyListSchema Hoys = default(HoyListSchema), int? Mode = default(int?), string Suffix = default(string))
         {
             this.Wea = Wea;
             this.SkyDensity = SkyDensity;
@@ -73,7 +73,7 @@ namespace IO.Swagger.Model
         /// Gets or Sets Hoys
         /// </summary>
         [DataMember(Name="hoys", EmitDefaultValue=false)]
-        public HoysSchema Hoys { get; set; }
+        public HoyListSchema Hoys { get; set; }
 
         /// <summary>
         /// sky mode

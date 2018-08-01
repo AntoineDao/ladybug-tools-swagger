@@ -6,7 +6,7 @@ from flask import json
 from six import BytesIO
 
 from swagger_server.models.grid_based_recipe_schema import GridBasedRecipeSchema  # noqa: E501
-from swagger_server.models.inline_response200 import InlineResponse200  # noqa: E501
+from swagger_server.models.inline_response2006 import InlineResponse2006  # noqa: E501
 from swagger_server.models.inline_response400 import InlineResponse400  # noqa: E501
 from swagger_server.test import BaseTestCase
 
@@ -19,8 +19,9 @@ class TestGetAndDeleteRecipesController(BaseTestCase):
 
         Get a list of daylight recipe objects
         """
-        query_string = [('size', 56),
-                        ('country', 'country_example')]
+        query_string = [('type', 'type_example'),
+                        ('location', 'location_example'),
+                        ('state', 'state_example')]
         response = self.client.open(
             '/api/recipe/',
             method='GET',
@@ -42,7 +43,7 @@ class TestGetAndDeleteRecipesController(BaseTestCase):
     def test_recipe_uuid_get(self):
         """Test case for recipe_uuid_get
 
-        Get a specific analysis_grid file
+        Get a specific analysis_grid object
         """
         response = self.client.open(
             '/api/recipe/{uuid}'.format(uuid='uuid_example'),

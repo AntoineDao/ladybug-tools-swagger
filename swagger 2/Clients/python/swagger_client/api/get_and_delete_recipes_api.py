@@ -43,9 +43,10 @@ class GetAndDeleteRecipesApi(object):
         >>> result = thread.get()
 
         :param async bool
-        :param int size: Number of files returned
-        :param str country: Country where definitions should be from
-        :return: InlineResponse200
+        :param str type: The type of recipe to be retrieved
+        :param str location: The location where the weather sky is generated from (can be country or city, will only work for climate based recipes)
+        :param str state: The state of the recipe on the server (whether it has run, is running, has failed or is on hold)
+        :return: InlineResponse2006
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -66,14 +67,15 @@ class GetAndDeleteRecipesApi(object):
         >>> result = thread.get()
 
         :param async bool
-        :param int size: Number of files returned
-        :param str country: Country where definitions should be from
-        :return: InlineResponse200
+        :param str type: The type of recipe to be retrieved
+        :param str location: The location where the weather sky is generated from (can be country or city, will only work for climate based recipes)
+        :param str state: The state of the recipe on the server (whether it has run, is running, has failed or is on hold)
+        :return: InlineResponse2006
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['size', 'country']  # noqa: E501
+        all_params = ['type', 'location', 'state']  # noqa: E501
         all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -94,10 +96,12 @@ class GetAndDeleteRecipesApi(object):
         path_params = {}
 
         query_params = []
-        if 'size' in params:
-            query_params.append(('size', params['size']))  # noqa: E501
-        if 'country' in params:
-            query_params.append(('country', params['country']))  # noqa: E501
+        if 'type' in params:
+            query_params.append(('type', params['type']))  # noqa: E501
+        if 'location' in params:
+            query_params.append(('location', params['location']))  # noqa: E501
+        if 'state' in params:
+            query_params.append(('state', params['state']))  # noqa: E501
 
         header_params = {}
 
@@ -116,7 +120,7 @@ class GetAndDeleteRecipesApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse200',  # noqa: E501
+            response_type='InlineResponse2006',  # noqa: E501
             auth_settings=auth_settings,
             async=params.get('async'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -127,14 +131,14 @@ class GetAndDeleteRecipesApi(object):
     def recipe_uuid_delete(self, uuid, **kwargs):  # noqa: E501
         """Delete an existing recipe object  # noqa: E501
 
-        Delete an recipe object in the database specifying the uuid of the file  # noqa: E501
+        Delete an recipe object in the database specifying the uuid of the object  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async=True
         >>> thread = api.recipe_uuid_delete(uuid, async=True)
         >>> result = thread.get()
 
         :param async bool
-        :param str uuid: The unique identifier of the recipe. (required)
+        :param str uuid: The unique identifier of the analysis_grid. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -149,14 +153,14 @@ class GetAndDeleteRecipesApi(object):
     def recipe_uuid_delete_with_http_info(self, uuid, **kwargs):  # noqa: E501
         """Delete an existing recipe object  # noqa: E501
 
-        Delete an recipe object in the database specifying the uuid of the file  # noqa: E501
+        Delete an recipe object in the database specifying the uuid of the object  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async=True
         >>> thread = api.recipe_uuid_delete_with_http_info(uuid, async=True)
         >>> result = thread.get()
 
         :param async bool
-        :param str uuid: The unique identifier of the recipe. (required)
+        :param str uuid: The unique identifier of the analysis_grid. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -216,9 +220,9 @@ class GetAndDeleteRecipesApi(object):
             collection_formats=collection_formats)
 
     def recipe_uuid_get(self, uuid, **kwargs):  # noqa: E501
-        """Get a specific analysis_grid file  # noqa: E501
+        """Get a specific analysis_grid object  # noqa: E501
 
-        Returns a single analysis_grid file  # noqa: E501
+        Returns a single analysis_grid object  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async=True
         >>> thread = api.recipe_uuid_get(uuid, async=True)
@@ -238,9 +242,9 @@ class GetAndDeleteRecipesApi(object):
             return data
 
     def recipe_uuid_get_with_http_info(self, uuid, **kwargs):  # noqa: E501
-        """Get a specific analysis_grid file  # noqa: E501
+        """Get a specific analysis_grid object  # noqa: E501
 
-        Returns a single analysis_grid file  # noqa: E501
+        Returns a single analysis_grid object  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async=True
         >>> thread = api.recipe_uuid_get_with_http_info(uuid, async=True)

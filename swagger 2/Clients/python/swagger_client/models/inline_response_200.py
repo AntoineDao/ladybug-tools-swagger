@@ -16,7 +16,7 @@ import re  # noqa: F401
 
 import six
 
-from swagger_client.models.grid_based_recipe_schema import GridBasedRecipeSchema  # noqa: F401,E501
+from swagger_client.models.inline_response200_results import InlineResponse200Results  # noqa: F401,E501
 
 
 class InlineResponse200(object):
@@ -33,47 +33,21 @@ class InlineResponse200(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'query': 'object',
-        'results': 'list[GridBasedRecipeSchema]'
+        'results': 'list[InlineResponse200Results]'
     }
 
     attribute_map = {
-        'query': 'query',
         'results': 'results'
     }
 
-    def __init__(self, query=None, results=None):  # noqa: E501
+    def __init__(self, results=None):  # noqa: E501
         """InlineResponse200 - a model defined in Swagger"""  # noqa: E501
 
-        self._query = None
         self._results = None
         self.discriminator = None
 
-        if query is not None:
-            self.query = query
         if results is not None:
             self.results = results
-
-    @property
-    def query(self):
-        """Gets the query of this InlineResponse200.  # noqa: E501
-
-
-        :return: The query of this InlineResponse200.  # noqa: E501
-        :rtype: object
-        """
-        return self._query
-
-    @query.setter
-    def query(self, query):
-        """Sets the query of this InlineResponse200.
-
-
-        :param query: The query of this InlineResponse200.  # noqa: E501
-        :type: object
-        """
-
-        self._query = query
 
     @property
     def results(self):
@@ -81,7 +55,7 @@ class InlineResponse200(object):
 
 
         :return: The results of this InlineResponse200.  # noqa: E501
-        :rtype: list[GridBasedRecipeSchema]
+        :rtype: list[InlineResponse200Results]
         """
         return self._results
 
@@ -91,7 +65,7 @@ class InlineResponse200(object):
 
 
         :param results: The results of this InlineResponse200.  # noqa: E501
-        :type: list[GridBasedRecipeSchema]
+        :type: list[InlineResponse200Results]
         """
 
         self._results = results

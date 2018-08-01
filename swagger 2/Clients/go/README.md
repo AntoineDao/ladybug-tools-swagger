@@ -21,25 +21,56 @@ All URIs are relative to *http://api.ladybug-tools.io/api*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AnnualApi* | [**RecipeAnnualGridbasedPost**](docs/AnnualApi.md#recipeannualgridbasedpost) | **Post** /recipe/annual/gridbased | Create a new annual file
-*AnnualApi* | [**RecipeAnnualGridbasedUuidPut**](docs/AnnualApi.md#recipeannualgridbaseduuidput) | **Put** /recipe/annual/gridbased/{uuid} | Modify an existing annual file
-*DaylightFactorApi* | [**RecipeDaylightFactorGridbasedPost**](docs/DaylightFactorApi.md#recipedaylightfactorgridbasedpost) | **Post** /recipe/daylight_factor/gridbased | Create a new analysis_grid file
-*DaylightFactorApi* | [**RecipeDaylightFactorGridbasedUuidPut**](docs/DaylightFactorApi.md#recipedaylightfactorgridbaseduuidput) | **Put** /recipe/daylight_factor/gridbased/{uuid} | Modify an existing analysis_grid file
-*DirectReflectionApi* | [**RecipeDirectReflectionGridbasedPost**](docs/DirectReflectionApi.md#recipedirectreflectiongridbasedpost) | **Post** /recipe/direct_reflection/gridbased | Create a new direct_reflection file
-*DirectReflectionApi* | [**RecipeDirectReflectionGridbasedUuidPut**](docs/DirectReflectionApi.md#recipedirectreflectiongridbaseduuidput) | **Put** /recipe/direct_reflection/gridbased/{uuid} | Modify an existing direct_reflection file
-*FivePhaseApi* | [**RecipeFivePhaseGridbasedPost**](docs/FivePhaseApi.md#recipefivephasegridbasedpost) | **Post** /recipe/five_phase/gridbased | Create a new five_phase file
-*FivePhaseApi* | [**RecipeFivePhaseGridbasedUuidPut**](docs/FivePhaseApi.md#recipefivephasegridbaseduuidput) | **Put** /recipe/five_phase/gridbased/{uuid} | Modify an existing five_phase file
+*AnalysisGridApi* | [**AnalysisGridGet**](docs/AnalysisGridApi.md#analysisgridget) | **Get** /analysis_grid | Get a list of analysis_grid objects
+*AnalysisGridApi* | [**AnalysisGridPost**](docs/AnalysisGridApi.md#analysisgridpost) | **Post** /analysis_grid | Create a new analysis_grid file
+*AnalysisGridApi* | [**AnalysisGridUuidDelete**](docs/AnalysisGridApi.md#analysisgriduuiddelete) | **Delete** /analysis_grid/{uuid} | Delete an existing analysis_grid file
+*AnalysisGridApi* | [**AnalysisGridUuidGet**](docs/AnalysisGridApi.md#analysisgriduuidget) | **Get** /analysis_grid/{uuid} | Get an analysis_grid object
+*AnalysisGridApi* | [**AnalysisGridUuidPut**](docs/AnalysisGridApi.md#analysisgriduuidput) | **Put** /analysis_grid/{uuid} | Modify an existing analysis_grid file
+*AnnualRecipeApi* | [**RecipeAnnualGridbasedPost**](docs/AnnualRecipeApi.md#recipeannualgridbasedpost) | **Post** /recipe/annual/gridbased | Create a new annual object
+*AnnualRecipeApi* | [**RecipeAnnualGridbasedUuidPut**](docs/AnnualRecipeApi.md#recipeannualgridbaseduuidput) | **Put** /recipe/annual/gridbased/{uuid} | Modify an existing annual object
+*BSDFMaterialApi* | [**MaterialBsdfPost**](docs/BSDFMaterialApi.md#materialbsdfpost) | **Post** /material/bsdf | Create a new bsdf material object
+*BSDFMaterialApi* | [**MaterialBsdfUuidPut**](docs/BSDFMaterialApi.md#materialbsdfuuidput) | **Put** /material/bsdf/{uuid} | Modify an existing bsdf material file
+*DaylightFactorRecipeApi* | [**RecipeDaylightFactorGridbasedPost**](docs/DaylightFactorRecipeApi.md#recipedaylightfactorgridbasedpost) | **Post** /recipe/daylight_factor/gridbased | Create a new analysis_grid object
+*DaylightFactorRecipeApi* | [**RecipeDaylightFactorGridbasedUuidPut**](docs/DaylightFactorRecipeApi.md#recipedaylightfactorgridbaseduuidput) | **Put** /recipe/daylight_factor/gridbased/{uuid} | Modify an existing analysis_grid object
+*DirectReflectionRecipeApi* | [**RecipeDirectReflectionGridbasedPost**](docs/DirectReflectionRecipeApi.md#recipedirectreflectiongridbasedpost) | **Post** /recipe/direct_reflection/gridbased | Create a new direct_reflection object
+*DirectReflectionRecipeApi* | [**RecipeDirectReflectionGridbasedUuidPut**](docs/DirectReflectionRecipeApi.md#recipedirectreflectiongridbaseduuidput) | **Put** /recipe/direct_reflection/gridbased/{uuid} | Modify an existing direct_reflection object
+*EPWApi* | [**EpwGet**](docs/EPWApi.md#epwget) | **Get** /epw | Get a list of EPW objects
+*EPWApi* | [**EpwPost**](docs/EPWApi.md#epwpost) | **Post** /epw | Create a new epw file
+*EPWApi* | [**EpwUuidDelete**](docs/EPWApi.md#epwuuiddelete) | **Delete** /epw/{uuid} | Delete an existing epw file
+*EPWApi* | [**EpwUuidGet**](docs/EPWApi.md#epwuuidget) | **Get** /epw/{uuid} | Get a specific epw file
+*EPWApi* | [**EpwUuidPut**](docs/EPWApi.md#epwuuidput) | **Put** /epw/{uuid} | Modify an existing epw file
+*FivePhaseRecipeApi* | [**RecipeFivePhaseGridbasedPost**](docs/FivePhaseRecipeApi.md#recipefivephasegridbasedpost) | **Post** /recipe/five_phase/gridbased | Create a new five_phase object
+*FivePhaseRecipeApi* | [**RecipeFivePhaseGridbasedUuidPut**](docs/FivePhaseRecipeApi.md#recipefivephasegridbaseduuidput) | **Put** /recipe/five_phase/gridbased/{uuid} | Modify an existing five_phase object
+*GetAndDeleteMaterialsApi* | [**MaterialGet**](docs/GetAndDeleteMaterialsApi.md#materialget) | **Get** /material | Get a list of material objects
+*GetAndDeleteMaterialsApi* | [**MaterialUuidDelete**](docs/GetAndDeleteMaterialsApi.md#materialuuiddelete) | **Delete** /material/{uuid} | Delete an existing material file
+*GetAndDeleteMaterialsApi* | [**MaterialUuidGet**](docs/GetAndDeleteMaterialsApi.md#materialuuidget) | **Get** /material/{uuid} | Get a specific material object
 *GetAndDeleteRecipesApi* | [**RecipeGet**](docs/GetAndDeleteRecipesApi.md#recipeget) | **Get** /recipe/ | Get a list of daylight recipe objects
 *GetAndDeleteRecipesApi* | [**RecipeUuidDelete**](docs/GetAndDeleteRecipesApi.md#recipeuuiddelete) | **Delete** /recipe/{uuid} | Delete an existing recipe object
-*GetAndDeleteRecipesApi* | [**RecipeUuidGet**](docs/GetAndDeleteRecipesApi.md#recipeuuidget) | **Get** /recipe/{uuid} | Get a specific analysis_grid file
-*PointInTimeApi* | [**RecipePointInTimeGridbasedPost**](docs/PointInTimeApi.md#recipepointintimegridbasedpost) | **Post** /recipe/point_in_time/gridbased | Create a new point_in_time file
-*PointInTimeApi* | [**RecipePointInTimeGridbasedUuidPut**](docs/PointInTimeApi.md#recipepointintimegridbaseduuidput) | **Put** /recipe/point_in_time/gridbased/{uuid} | Modify an existing point_in_time file
-*RadiationApi* | [**RecipeRadiationGridbasedPost**](docs/RadiationApi.md#reciperadiationgridbasedpost) | **Post** /recipe/radiation/gridbased | Create a new radiation file
-*RadiationApi* | [**RecipeRadiationGridbasedUuidPut**](docs/RadiationApi.md#reciperadiationgridbaseduuidput) | **Put** /recipe/radiation/gridbased/{uuid} | Modify an existing radiation file
-*SolarAccessApi* | [**RecipeSolarAccessGridbasedPost**](docs/SolarAccessApi.md#recipesolaraccessgridbasedpost) | **Post** /recipe/solar_access/gridbased | Create a new solar_access file
-*SolarAccessApi* | [**RecipeSolarAccessGridbasedUuidPut**](docs/SolarAccessApi.md#recipesolaraccessgridbaseduuidput) | **Put** /recipe/solar_access/gridbased/{uuid} | Modify an existing solar_access file
-*ThreePhaseApi* | [**RecipeThreePhaseGridbasedPost**](docs/ThreePhaseApi.md#recipethreephasegridbasedpost) | **Post** /recipe/three_phase/gridbased | Create a new three_phase file
-*ThreePhaseApi* | [**RecipeThreePhaseGridbasedUuidPut**](docs/ThreePhaseApi.md#recipethreephasegridbaseduuidput) | **Put** /recipe/three_phase/gridbased/{uuid} | Modify an existing three_phase file
+*GetAndDeleteRecipesApi* | [**RecipeUuidGet**](docs/GetAndDeleteRecipesApi.md#recipeuuidget) | **Get** /recipe/{uuid} | Get a specific analysis_grid object
+*HoneybeeSurfaceApi* | [**HbsurfaceGet**](docs/HoneybeeSurfaceApi.md#hbsurfaceget) | **Get** /hbsurface | Get a list of hbsurface objects
+*HoneybeeSurfaceApi* | [**HbsurfacePost**](docs/HoneybeeSurfaceApi.md#hbsurfacepost) | **Post** /hbsurface | Create a new hbsurface object
+*HoneybeeSurfaceApi* | [**HbsurfaceUuidDelete**](docs/HoneybeeSurfaceApi.md#hbsurfaceuuiddelete) | **Delete** /hbsurface/{uuid} | Delete an existing hbsurface object
+*HoneybeeSurfaceApi* | [**HbsurfaceUuidGet**](docs/HoneybeeSurfaceApi.md#hbsurfaceuuidget) | **Get** /hbsurface/{uuid} | Get a specific hbsurface object
+*HoneybeeSurfaceApi* | [**HbsurfaceUuidPut**](docs/HoneybeeSurfaceApi.md#hbsurfaceuuidput) | **Put** /hbsurface/{uuid} | Modify an existing hbsurface object
+*LightSourceMaterialApi* | [**MaterialLightSourcePost**](docs/LightSourceMaterialApi.md#materiallightsourcepost) | **Post** /material/light_source | Create a new light_source material object
+*LightSourceMaterialApi* | [**MaterialLightSourceUuidPut**](docs/LightSourceMaterialApi.md#materiallightsourceuuidput) | **Put** /material/light_source/{uuid} | Modify an existing light_source material file
+*OpaqueMaterialApi* | [**MaterialOpaquePost**](docs/OpaqueMaterialApi.md#materialopaquepost) | **Post** /material/opaque | Create a new opaque material object
+*OpaqueMaterialApi* | [**MaterialOpaqueUuidPut**](docs/OpaqueMaterialApi.md#materialopaqueuuidput) | **Put** /material/opaque/{uuid} | Modify an existing opaque material file
+*PointInTimeRecipeApi* | [**RecipePointInTimeGridbasedPost**](docs/PointInTimeRecipeApi.md#recipepointintimegridbasedpost) | **Post** /recipe/point_in_time/gridbased | Create a new point_in_time object
+*PointInTimeRecipeApi* | [**RecipePointInTimeGridbasedUuidPut**](docs/PointInTimeRecipeApi.md#recipepointintimegridbaseduuidput) | **Put** /recipe/point_in_time/gridbased/{uuid} | Modify an existing point_in_time object
+*RadiationRecipeApi* | [**RecipeRadiationGridbasedPost**](docs/RadiationRecipeApi.md#reciperadiationgridbasedpost) | **Post** /recipe/radiation/gridbased | Create a new radiation object
+*RadiationRecipeApi* | [**RecipeRadiationGridbasedUuidPut**](docs/RadiationRecipeApi.md#reciperadiationgridbaseduuidput) | **Put** /recipe/radiation/gridbased/{uuid} | Modify an existing radiation object
+*SolarAccessRecipeApi* | [**RecipeSolarAccessGridbasedPost**](docs/SolarAccessRecipeApi.md#recipesolaraccessgridbasedpost) | **Post** /recipe/solar_access/gridbased | Create a new solar_access object
+*SolarAccessRecipeApi* | [**RecipeSolarAccessGridbasedUuidPut**](docs/SolarAccessRecipeApi.md#recipesolaraccessgridbaseduuidput) | **Put** /recipe/solar_access/gridbased/{uuid} | Modify an existing solar_access object
+*ThreePhaseRecipeApi* | [**RecipeThreePhaseGridbasedPost**](docs/ThreePhaseRecipeApi.md#recipethreephasegridbasedpost) | **Post** /recipe/three_phase/gridbased | Create a new three_phase object
+*ThreePhaseRecipeApi* | [**RecipeThreePhaseGridbasedUuidPut**](docs/ThreePhaseRecipeApi.md#recipethreephasegridbaseduuidput) | **Put** /recipe/three_phase/gridbased/{uuid} | Modify an existing three_phase object
+*TranslucentMaterialApi* | [**MaterialTranslucentPost**](docs/TranslucentMaterialApi.md#materialtranslucentpost) | **Post** /material/translucent | Create a new translucent material object
+*TranslucentMaterialApi* | [**MaterialTranslucentUuidPut**](docs/TranslucentMaterialApi.md#materialtranslucentuuidput) | **Put** /material/translucent/{uuid} | Modify an existing translucent material file
+*WEAApi* | [**WeaGet**](docs/WEAApi.md#weaget) | **Get** /wea | Get a list of WEA objects
+*WEAApi* | [**WeaPost**](docs/WEAApi.md#weapost) | **Post** /wea | Create a new wea object
+*WEAApi* | [**WeaUuidDelete**](docs/WEAApi.md#weauuiddelete) | **Delete** /wea/{uuid} | Delete an existing wea object
+*WEAApi* | [**WeaUuidGet**](docs/WEAApi.md#weauuidget) | **Get** /wea/{uuid} | Get a specific wea object
+*WEAApi* | [**WeaUuidPut**](docs/WEAApi.md#weauuidput) | **Put** /wea/{uuid} | Modify an existing wea object
 
 
 ## Documentation For Models
@@ -51,27 +82,42 @@ Class | Method | HTTP request | Description
  - [AnalysisType](docs/AnalysisType.md)
  - [AnnualGridBasedSchema](docs/AnnualGridBasedSchema.md)
  - [BsdfMaterialSchema](docs/BsdfMaterialSchema.md)
- - [DataCollection](docs/DataCollection.md)
- - [DataType](docs/DataType.md)
+ - [DataCollectionSchema](docs/DataCollectionSchema.md)
+ - [DataTypeSchema](docs/DataTypeSchema.md)
  - [DaylightFactorGridBasedSchema](docs/DaylightFactorGridBasedSchema.md)
  - [DirectReflectionGridBasedSchema](docs/DirectReflectionGridBasedSchema.md)
+ - [EpwLocationSchema](docs/EpwLocationSchema.md)
+ - [EpwSchema](docs/EpwSchema.md)
  - [FivePhaselGridBasedSchema](docs/FivePhaselGridBasedSchema.md)
  - [GridBasedRecipeSchema](docs/GridBasedRecipeSchema.md)
  - [HbSurfaceSchema](docs/HbSurfaceSchema.md)
+ - [HoyListSchema](docs/HoyListSchema.md)
  - [HoySchema](docs/HoySchema.md)
  - [HoySchemaHoy](docs/HoySchemaHoy.md)
- - [HoysSchema](docs/HoysSchema.md)
  - [InlineResponse200](docs/InlineResponse200.md)
+ - [InlineResponse2001](docs/InlineResponse2001.md)
+ - [InlineResponse20010](docs/InlineResponse20010.md)
+ - [InlineResponse2002](docs/InlineResponse2002.md)
+ - [InlineResponse2002Results](docs/InlineResponse2002Results.md)
+ - [InlineResponse2003](docs/InlineResponse2003.md)
+ - [InlineResponse2004](docs/InlineResponse2004.md)
+ - [InlineResponse2004Results](docs/InlineResponse2004Results.md)
+ - [InlineResponse2005](docs/InlineResponse2005.md)
+ - [InlineResponse2006](docs/InlineResponse2006.md)
+ - [InlineResponse2006Results](docs/InlineResponse2006Results.md)
+ - [InlineResponse2007](docs/InlineResponse2007.md)
+ - [InlineResponse2007Results](docs/InlineResponse2007Results.md)
+ - [InlineResponse2008](docs/InlineResponse2008.md)
+ - [InlineResponse2009](docs/InlineResponse2009.md)
+ - [InlineResponse2009Results](docs/InlineResponse2009Results.md)
+ - [InlineResponse200Results](docs/InlineResponse200Results.md)
  - [InlineResponse204](docs/InlineResponse204.md)
  - [InlineResponse400](docs/InlineResponse400.md)
  - [LightSourceMaterialSchema](docs/LightSourceMaterialSchema.md)
- - [Location](docs/Location.md)
- - [LocationSchema](docs/LocationSchema.md)
  - [MaterialSchema](docs/MaterialSchema.md)
  - [OpaqueMaterialSchema](docs/OpaqueMaterialSchema.md)
  - [PointInTimeGridBasedSchema](docs/PointInTimeGridBasedSchema.md)
  - [PointSchema](docs/PointSchema.md)
- - [QueryParameters](docs/QueryParameters.md)
  - [RadianceParameters](docs/RadianceParameters.md)
  - [RadiationGridBasedSchema](docs/RadiationGridBasedSchema.md)
  - [SkyMtxSchema](docs/SkyMtxSchema.md)

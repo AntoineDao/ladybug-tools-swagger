@@ -6,7 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.grid_based_recipe_schema import GridBasedRecipeSchema  # noqa: F401,E501
+from swagger_server.models.inline_response200_results import InlineResponse200Results  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -16,25 +16,20 @@ class InlineResponse200(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, query: object=None, results: List[GridBasedRecipeSchema]=None):  # noqa: E501
+    def __init__(self, results: List[InlineResponse200Results]=None):  # noqa: E501
         """InlineResponse200 - a model defined in Swagger
 
-        :param query: The query of this InlineResponse200.  # noqa: E501
-        :type query: object
         :param results: The results of this InlineResponse200.  # noqa: E501
-        :type results: List[GridBasedRecipeSchema]
+        :type results: List[InlineResponse200Results]
         """
         self.swagger_types = {
-            'query': object,
-            'results': List[GridBasedRecipeSchema]
+            'results': List[InlineResponse200Results]
         }
 
         self.attribute_map = {
-            'query': 'query',
             'results': 'results'
         }
 
-        self._query = query
         self._results = results
 
     @classmethod
@@ -49,43 +44,22 @@ class InlineResponse200(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def query(self) -> object:
-        """Gets the query of this InlineResponse200.
-
-
-        :return: The query of this InlineResponse200.
-        :rtype: object
-        """
-        return self._query
-
-    @query.setter
-    def query(self, query: object):
-        """Sets the query of this InlineResponse200.
-
-
-        :param query: The query of this InlineResponse200.
-        :type query: object
-        """
-
-        self._query = query
-
-    @property
-    def results(self) -> List[GridBasedRecipeSchema]:
+    def results(self) -> List[InlineResponse200Results]:
         """Gets the results of this InlineResponse200.
 
 
         :return: The results of this InlineResponse200.
-        :rtype: List[GridBasedRecipeSchema]
+        :rtype: List[InlineResponse200Results]
         """
         return self._results
 
     @results.setter
-    def results(self, results: List[GridBasedRecipeSchema]):
+    def results(self, results: List[InlineResponse200Results]):
         """Sets the results of this InlineResponse200.
 
 
         :param results: The results of this InlineResponse200.
-        :type results: List[GridBasedRecipeSchema]
+        :type results: List[InlineResponse200Results]
         """
 
         self._results = results
