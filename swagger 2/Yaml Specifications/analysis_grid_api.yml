@@ -14,7 +14,9 @@ paths:
   /analysis_grid:
     get:
       summary: Get some analysis_grid files
-      description: Retrieves a list of material uuids for a given filter.
+      description: Retrieves a list of analysis grids for a given filter.
+      tags:
+        - Analysis Grid
       parameters:
         - name: size
           in: query
@@ -49,6 +51,8 @@ paths:
     post:
       summary: Create a new analysis_grid file
       description: Adds a new analysis_grid file to the list
+      tags:
+        - Analysis Grid
       parameters:
         - name: analysis_grid
           in: body
@@ -71,6 +75,8 @@ paths:
     get:
       summary: Get a specific analysis_grid file
       description: Returns a single analysis_grid file
+      tags:
+        - Analysis Grid
       parameters:
         - in: path
           name: uuid
@@ -97,6 +103,8 @@ paths:
     put:
       summary: Modify an existing analysis_grid file
       description: Modifies any parameter (except uuid) of an analysis_grid file by completely replacing the definition file. A finer grain method can be set up later.
+      tags:
+        - Analysis Grid
       parameters:
         - in: path
           name: uuid
@@ -122,6 +130,8 @@ paths:
     delete:
       summary: Delete an existing analysis_grid file
       description: Delete an analysis_grid file in the database specifying the uuid of the file
+      tags:
+        - Analysis Grid
       parameters:
         - in: path
           name: uuid
@@ -181,7 +191,6 @@ definitions:
         items:
           $ref: "#/definitions/HoySchema"
 
-
   SourceSchema:
     properties:
       source_id:
@@ -191,7 +200,7 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/StateSchema"
-          
+
   AnalysisPointSchema:
     properties:
       location:
@@ -217,7 +226,6 @@ definitions:
         items:
           description: Name of a window group which contributes to the grid.
           type: string
-
 
   QueryParameters:
     properties:

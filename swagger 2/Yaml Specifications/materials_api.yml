@@ -15,6 +15,8 @@ paths:
     get:
       summary: Get some material files
       description: Retrieves a list of material uuids for a given filter.
+      tags:
+        - Get and Delete Materials
       parameters:
         - name: size
           in: query
@@ -57,6 +59,8 @@ paths:
     get:
       summary: Get a specific material file
       description: Returns a single material file
+      tags:
+        - Get and Delete Materials
       parameters:
         - in: path
           name: uuid
@@ -84,6 +88,8 @@ paths:
     delete:
       summary: Delete an existing material file
       description: Delete an material file in the database specifying the uuid of the file
+      tags:
+        - Get and Delete Materials
       parameters:
         - in: path
           name: uuid
@@ -107,6 +113,8 @@ paths:
     post:
       summary: Create a new opaque material object
       description: Adds a new opaque material json to the database
+      tag:
+        - Opaque Material
       parameters:
         - name: opaque_material
           in: body
@@ -129,6 +137,8 @@ paths:
     put:
       summary: Modify an existing opaque material file
       description: Modifies any parameter (except uuid) of a material file by completely replacing the definition file. A finer grain method can be set up later.
+      tag:
+        - Opaque Material
       parameters:
         - in: path
           name: uuid
@@ -156,6 +166,8 @@ paths:
     post:
       summary: Create a new translucent material object
       description: Adds a new translucent material json to the database
+      tag:
+        - Translucent Material
       parameters:
         - name: translucent_material
           in: body
@@ -178,6 +190,8 @@ paths:
     put:
       summary: Modify an existing translucent material file
       description: Modifies any parameter (except uuid) of a material file by completely replacing the definition file. A finer grain method can be set up later.
+      tag:
+        - Translucent Material
       parameters:
         - in: path
           name: uuid
@@ -205,6 +219,8 @@ paths:
     post:
       summary: Create a new light_source material object
       description: Adds a new light_source material json to the database
+      tag:
+        - Light Source Material
       parameters:
         - name: light_source_material
           in: body
@@ -227,6 +243,8 @@ paths:
     put:
       summary: Modify an existing light_source material file
       description: Modifies any parameter (except uuid) of a material file by completely replacing the definition file. A finer grain method can be set up later.
+      tag:
+        - Light Source Material
       parameters:
         - in: path
           name: uuid
@@ -254,6 +272,8 @@ paths:
     post:
       summary: Create a new bsdf material object
       description: Adds a new bsdf material json to the database
+      tag:
+        - BSDF Material
       parameters:
         - name: bsdf_material
           in: body
@@ -276,6 +296,8 @@ paths:
     put:
       summary: Modify an existing bsdf material file
       description: Modifies any parameter (except uuid) of a material file by completely replacing the definition file. A finer grain method can be set up later.
+      tag:
+        - BSDF Material
       parameters:
         - in: path
           name: uuid
@@ -306,11 +328,7 @@ definitions:
         description: The type of material
         type: string
       material: {}
-        # oneOf:
-        #   - $ref: "#/definitions/TranslucentMaterial"
-        #   - $ref: "#/definitions/OpaqueMaterial"
-        #   - $ref: "#/definitions/LightSourceMaterial"
-        #   - $ref: "#/definitions/BSDFMaterial"
+
     example:
       type: opaque
       material:

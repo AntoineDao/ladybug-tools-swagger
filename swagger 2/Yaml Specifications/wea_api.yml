@@ -15,6 +15,8 @@ paths:
     get:
       summary: Get some wea files
       description: Retrieves a list of wea uuids for a given filter.
+      tags:
+        - WEA
       parameters:
         - name: size
           in: query
@@ -40,6 +42,8 @@ paths:
     post:
       summary: Create a new wea file
       description: Adds a new wea file to the list
+      tags:
+        - WEA
       parameters:
         - name: wea
           in: body
@@ -62,6 +66,8 @@ paths:
     get:
       summary: Get a specific wea file
       description: Returns a single wea file
+      tags:
+        - WEA
       parameters:
         - name: uuid
           required: true
@@ -88,6 +94,8 @@ paths:
     put:
       summary: Modify an existing wea file
       description: Modifies any parameter (except uuid) of an wea file by completely replacing the wea file. A finer grain method can be set up later.
+      tags:
+        - WEA
       parameters:
         - name: uuid
           in: path
@@ -113,6 +121,8 @@ paths:
     delete:
       summary: Delete an existing wea file
       description: Delete an wea file in the database specifying the uuid of the file
+      tags:
+        - WEA
       parameters:
         - name: uuid
           in: path
@@ -131,8 +141,6 @@ paths:
         404:
           description: File not found
 
-
-
 definitions:
   WeaSchema:
     required:
@@ -147,14 +155,14 @@ definitions:
         items:
           type: string
       location:
-        $ref: "#/definitions/Location"
+        $ref: "#/definitions/LocationSchema"
       direct_normal_radiation:
-        $ref: "#/definitions/DataCollection"
+        $ref: "#/definitions/DataCollectionSchema"
       diffuse_horizontal_radiation:
-          $ref: "#/definitions/DataCollection"
+          $ref: "#/definitions/DataCollectionSchema"
 
 
-  Location:
+  LocationSchema:
     properties:
       city:
         type: string
@@ -171,7 +179,7 @@ definitions:
       elevation:
         type: number
 
-  DataCollection:
+  DataCollectionSchema:
     required:
       - data
     properties:
@@ -182,7 +190,7 @@ definitions:
         items:
           $ref: "#/definitions/DataType"
 
-  DataType:
+  DataTypeSchema:
     required:
       - value
       - datetime
