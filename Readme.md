@@ -9,3 +9,11 @@ There are currently two versions of the specifications:
 The easiest way to check what the specification looks like or to make changes is to copy the `spec_api.yml` file and paste it into the [Swagger Editor](https://editor.swagger.io/)
 
 The Swagger Editor can also be used to generate Server or Client packages in multiple languages. At the moment there are more language options for Swagger 2.0. Any generated Client/Server can be found under the `swagger 2/Clients` or `swagger 2/Servers` folders.
+
+## Servers
+* [Python](swagger 2/Servers/python-flask)
+* [Javascript](swagger 2/Clients/javascript)
+## Clients
+* [Python](swagger 2/Clients/python)
+* [Go](swagger 2/Clients/go)
+* [C#](swagger 2/Clients/csharp)
