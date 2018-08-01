@@ -1,0 +1,14 @@
+# BsdfMaterialSchema
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**Name** | **string** | Name of the material | [optional] [default to null]
+**XmlData** | **string** | A string of the original XML | [optional] [default to null]
+**UpOrientation** | **float32** |  | [optional] [default to null]
+**Thickness** | **float32** |  | [optional] [default to null]
+**Modifier** | **string** |  | [optional] [default to null]
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
