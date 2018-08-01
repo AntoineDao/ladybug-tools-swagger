@@ -13,55 +13,39 @@ basePath: /api
 paths:
   /hbsurface:
     get:
-      summary: Get some hbsurface files
-      description: Retrieves a list of material uuids for a given filter.
+      summary: Get a list of hbsurface objects
+      description: Retrieves a list of HoneyBee Surface objects for a given filter.
       tags:
         - Honeybee Surface
       parameters:
-        - name: size
-          in: query
-          description: Number of files returned
-          type: integer
-        - name: country
-          in: query
-          description: Country where definitions should be from
-          type: string
+        - $ref: "#/parameters/SurfaceTypeParameter"
+        - $ref: "#/parameters/SurfaceMaterialParameter"
+        - $ref: "#/parameters/SurfaceStateParameter"
       responses:
         200:
           description: A list of hbsurfaces matching the query parameters
           schema:
             properties:
-              query:
-                properties:
-                  size:
-                    example: 5
-                  country:
-                    example: UK
               results:
                 type: array
                 items:
                   properties:
-                    schema:
-                      required:
-                        - uuid
-                        - hbsurface
-                      properties:
-                        uuid:
-                          type: string
-                        hbsurface:
-                          $ref: "#/definitions/HBSurfaceSchema"
+                    uuid:
+                      type: string
+                    hbsurface:
+                      $ref: "#/definitions/HBSurfaceSchema"
 
         404:
           description: Couldnt find any definitions matching your search query... :(
     post:
-      summary: Create a new hbsurface file
-      description: Adds a new hbsurface file to the list
+      summary: Create a new hbsurface object
+      description: Adds a new hbsurface object to the list
       tags:
         - Honeybee Surface
       parameters:
         - in: body
           name: hbsurface
-          description: A hbsurface JSON filer with a uuid key.
+          description: A hbsurface JSON object
           required: true
           schema:
             $ref: "#/definitions/HBSurfaceSchema"
@@ -77,17 +61,18 @@ paths:
           description: Could not create hbsurface... :(
 
   /hbsurface/{uuid}:
+    parameters:
+      - in: path
+        name: uuid
+        required: true
+        description: The unique identifier of the hbsurface.
+        type: string
+
     get:
-      summary: Get a specific hbsurface file
-      description: Returns a single hbsurface file
+      summary: Get a specific hbsurface object
+      description: Returns a single hbsurface object
       tags:
         - Honeybee Surface
-      parameters:
-        - in: path
-          name: uuid
-          required: true
-          description: The unique identifier of the hbsurface.
-          type: string
       responses:
         200:
           description: Succesfully returns the hbsurface
@@ -106,19 +91,14 @@ paths:
           description: The hbsurface does not exist
 
     put:
-      summary: Modify an existing hbsurface file
-      description: Modifies any parameter (except uuid) of an hbsurface file by completely replacing the definition file. A finer grain method can be set up later.
+      summary: Modify an existing hbsurface object
+      description: Modifies any parameter (except uuid) of an hbsurface object by completely replacing the definition object. A finer grain method can be set up later.
       tags:
         - Honeybee Surface
       parameters:
-        - in: path
-          name: uuid
-          required: true
-          description: The unique identifier of the hbsurface.
-          type: string
         - in: body
           name: hbsurface
-          description: A hbsurface JSON filer with a uuid key.
+          description: A hbsurface JSON objectr with a uuid key.
           required: true
           schema:
             $ref: "#/definitions/HBSurfaceSchema"
@@ -133,19 +113,13 @@ paths:
               error:
                 type: string
     delete:
-      summary: Delete an existing hbsurface file
-      description: Delete an hbsurface file in the database specifying the uuid of the file
+      summary: Delete an existing hbsurface object
+      description: Delete an hbsurface object in the database specifying the uuid of the object
       tags:
         - Honeybee Surface
-      parameters:
-        - in: path
-          name: uuid
-          required: true
-          description: The unique identifier of the hbsurface.
-          type: string
       responses:
         200:
-          description: File succesfully deleted
+          description: object succesfully deleted
         400:
           description: Bad request, something went wrong... :(
           schema:
@@ -153,7 +127,27 @@ paths:
               error:
                 type: string
         404:
-          description: File not found
+          description: object not found
+
+parameters:
+  SurfaceTypeParameter:
+    in: query
+    name: surface_type
+    description: The type of the surface to be queried
+    type: string
+    enum: [wall, underground_wall, roof, underground_ceiling, floor, slab_on_grade, exposed_floor, ceiling, window, context]
+
+  SurfaceMaterialParameter:
+    in: query
+    name: surface_material
+    description: retrieve surfaces based on the name of their main material definiton (not materials in a given surface state)
+    type: string
+
+  SurfaceStateParameter:
+    in: query
+    name: surface_state
+    description: retrieve a surface using the name of a given state it contains
+    type: string
 
 definitions:
   VertexSchema:
@@ -220,144 +214,3 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/AnalysisSurfaceSchema"
-
-  MaterialSchema:
-    properties:
-      type:
-        description: The type of material
-        type: string
-      material: {}
-        # oneOf:
-        #   - $ref: "#/definitions/TranslucentMaterial"
-        #   - $ref: "#/definitions/OpaqueMaterial"
-        #   - $ref: "#/definitions/LightSourceMaterial"
-        #   - $ref: "#/definitions/BSDFMaterial"
-    example:
-      type: opaque
-      material:
-        name: HoneyComb
-        type: plastic
-        r_reflectance: 0.4
-        g_reflectance: 0.5
-        b_reflectance: 0.2
-        refraction: 0.4
-        specularity: 0.01
-        roughness: 0.03
-        modifier: void
-
-  TranslucentMaterialSchema:
-    properties:
-      name:
-        description: Name of the material
-        type: string
-      r_transmittance:
-        description: Transmittance for red
-        type: number
-        minimum: 0
-        maximum: 1
-      g_transmittance:
-        description: Transmittance for green
-        type: number
-        minimum: 0
-        maximum: 1
-      b_transmittance:
-        description: Transmittance for blue
-        type: number
-        minimum: 0
-        maximum: 1
-      refraction:
-        description: Index of refraction
-        type: number
-        minimum: 0
-        maximum: 1
-      modifier:
-        type: string
-        default: void
-
-  OpaqueMaterialSchema:
-    properties:
-      name:
-        description: Name of the material
-        type: string
-      type:
-        description: Material type
-        type: string
-        enum: [metal, plastic]
-      r_reflectance:
-        description: Reflectance for red
-        type: number
-        minimum: 0
-        maximum: 1
-      g_reflectance:
-        description: Reflectance for green
-        type: number
-        minimum: 0
-        maximum: 1
-      b_reflectance:
-        description: Reflectance for blue
-        type: number
-        minimum: 0
-        maximum: 1
-      refraction:
-        description: Index of refraction
-        type: number
-        minimum: 0
-        maximum: 1
-      specularity:
-        description: Material specularity
-        type: number
-      roughness:
-        description: Material roughness
-        type: number
-      modifier:
-        type: string
-        default: void
-
-  LightSourceMaterialSchema:
-    properties:
-      name:
-        description: Name of the material
-        type: string
-      red:
-        description: A positive value for the Red channel of the glow
-        type: number
-        minimum: 0
-        maximum: 1
-      green:
-        description: A positive value for the Green channel of the glow
-        type: number
-        minimum: 0
-        maximum: 1
-      blue:
-        description: A positive value for the Blue channel of the glow
-        type: number
-        minimum: 0
-        maximum: 1
-      radius:
-        description: Maximum radius for shadow testing
-        type: number
-      modifier:
-        type: string
-        default: void
-
-  BSDFMaterialSchema:
-    properties:
-      name:
-        description: Name of the material
-        type: string
-      xml_data:
-        description: A string of the original XML
-        type: string
-      up_orientation:
-        type: number
-      thickness:
-        type: number
-      modifier:
-        type: string
-        default: void
-
-  QueryParameters:
-    properties:
-      type:
-        type: string
-        example: The type of something the Definition is
