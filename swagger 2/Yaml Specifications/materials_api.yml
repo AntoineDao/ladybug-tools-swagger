@@ -18,9 +18,9 @@ paths:
       tags:
         - Get and Delete Materials
       parameters:
-        - $ref: "#/parameters/MaterialTypeParameter"
-        - $ref: "#/parameters/RGBTransmittanceParameter"
-        - $ref: "#/parameters/RGBReflectanceParameter"
+        - $ref: "#/parametersSchema/MaterialTypeParameter"
+        - $ref: "#/parametersSchema/RGBTransmittanceParameter"
+        - $ref: "#/parametersSchema/RGBReflectanceParameter"
       responses:
         200:
           description: A list of materials matching the query parameters
@@ -300,7 +300,7 @@ paths:
               error:
                 type: string
 
-parameters:
+parametersSchema:
 
   MaterialTypeParameter:
     in: query

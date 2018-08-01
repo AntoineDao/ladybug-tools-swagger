@@ -18,9 +18,9 @@ paths:
       tags:
         - Get and Delete Recipes
       parameters:
-      - $ref: "#/parameters/RecipeTypeParameter"
-      - $ref: "#/parameters/RecipeLocationParameter"
-      - $ref: "#/parameters/RecipeStateParameter"
+      - $ref: "#/parametersSchema/RecipeTypeParameter"
+      - $ref: "#/parametersSchema/RecipeLocationParameter"
+      - $ref: "#/parametersSchema/RecipeStateParameter"
       responses:
         200:
           description: A list of analysis_grids matching the query parameters
@@ -519,7 +519,7 @@ paths:
               error:
                 type: string
 
-parameters:
+parametersSchema:
 
   RecipeTypeParameter:
     name: type
@@ -563,7 +563,7 @@ definitions:
   SkySchema:
     properties:
       location:
-        $ref: "#/definitions/LocationSchema"
+        $ref: "#/definitions/EpwLocationSchema"
       hour:
         type: integer
         description: hour of the day - minvalue 0 and max value 23
@@ -664,7 +664,7 @@ definitions:
         items:
           $ref: "#/definitions/HBSurfaceSchema"
       location:
-        $ref: "#/definitions/LocationSchema"
+        $ref: "#/definitions/EpwLocationSchema"
       hoys:
         $ref: "#/definitions/HoyListSchema"
       sun_vectors:
@@ -690,7 +690,7 @@ definitions:
         items:
           $ref: "#/definitions/HBSurfaceSchema"
       location:
-        $ref: "#/definitions/LocationSchema"
+        $ref: "#/definitions/EpwLocationSchema"
       hoys:
         $ref: "#/definitions/HoyListSchema"
       sun_vectors:

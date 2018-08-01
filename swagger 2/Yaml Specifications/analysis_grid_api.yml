@@ -18,9 +18,9 @@ paths:
       tags:
         - Analysis Grid
       parameters:
-        - $ref: "#/parameters/GridNameParameter"
-        - $ref: "#/parameters/MinPointsParameter"
-        - $ref: "#/parameters/MaxPointsParameter"
+        - $ref: "#/parametersSchema/GridNameParameter"
+        - $ref: "#/parametersSchema/MinPointsParameter"
+        - $ref: "#/parametersSchema/MaxPointsParameter"
 
       responses:
         200:
@@ -131,7 +131,7 @@ paths:
         404:
           description: File not found
 
-parameters:
+parametersSchema:
   GridNameParameter:
     name: grid_name
     in: query

@@ -20,7 +20,7 @@ paths:
       produces:
         - application/json
       parameters:
-        - $ref: "#/parameters/CountryParameter"
+        - $ref: "#/parametersSchema/CountryParameter"
       responses:
         200:
           description: A list of epws matching the query parameters
@@ -127,7 +127,7 @@ paths:
         '404':
           description: File not found
 
-parameters:
+parametersSchema:
 
   CountryParameter:
     name: country

@@ -1,0 +1,2034 @@
+swagger: "2.0"
+
+info:
+  version: 0.0.0
+  title: Honeybee Server API
+  description: A sample API definition for a honeybee server
+
+schemes:
+  - http
+host: api.ladybug-tools.io
+basePath: /api
+paths:
+# ANALYSIS_GRID_API PATHS
+  /analysis_grid:
+    get:
+      summary: Get a list of analysis_grid objects
+      description: Retrieves a list of analysis grids for a given filter.
+      tags:
+        - Analysis Grid
+      parameters:
+        - $ref: "#/parametersSchema/GridNameParameter"
+        - $ref: "#/parametersSchema/MinPointsParameter"
+        - $ref: "#/parametersSchema/MaxPointsParameter"
+
+      responses:
+        200:
+          description: A list of analysis_grids matching the query parameters
+          schema:
+            properties:
+              results:
+                type: array
+                items:
+                  properties:
+                    uuid:
+                      type: string
+                    analysis_grid:
+                      $ref: "#/definitions/AnalysisGridSchema"
+        400:
+          description: Couldn't find any definitions matching your search query... :(
+
+    post:
+      summary: Create a new analysis_grid file
+      description: Adds a new analysis_grid file to the list
+      tags:
+        - Analysis Grid
+      parameters:
+        - name: analysis_grid
+          in: body
+          description: A analysis_grid JSON filer with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/AnalysisGridSchema"
+      responses:
+        204:
+          description: analysis_grid succesfully created.
+          schema:
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create analysis_grid... :(
+
+  /analysis_grid/{uuid}:
+    parameters:
+      - in: path
+        name: uuid
+        required: true
+        description: The unique identifier of the analysis_grid.
+        type: string
+
+    get:
+      summary: Get an analysis_grid object
+      description: Returns a single analysis_grid object based on the provided uuid
+      tags:
+        - Analysis Grid
+      responses:
+        200:
+          description: Succesfully returns the analysis_grid
+          schema:
+            required:
+              - uuid
+              - analysis_grid
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+              analysis_grid:
+                $ref: "#/definitions/AnalysisGridSchema"
+        400:
+          description: The uuid provided is invalid
+        404:
+          description: The analysis_grid does not exist
+
+    put:
+      summary: Modify an existing analysis_grid file
+      description: Modifies any parameter (except uuid) of an analysis_grid file by completely replacing the definition file. A finer grain method can be set up later.
+      tags:
+        - Analysis Grid
+      parameters:
+        - name: analysis_grid
+          in: body
+          description: A analysis_grid JSON filer with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/AnalysisGridSchema"
+
+      responses:
+        200:
+          description: Everything went smooth and well
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+    delete:
+      summary: Delete an existing analysis_grid file
+      description: Delete an analysis_grid file in the database specifying the uuid of the file
+      tags:
+        - Analysis Grid
+      responses:
+        200:
+          description: File succesfully deleted
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+        404:
+          description: File not found
+
+# EPW_API PATHS
+  /epw:
+    get:
+      summary: Get a list of EPW objects
+      description: Retrieves a list of epw objects for a given filter.
+      tags:
+        - EPW
+      produces:
+        - application/json
+      parameters:
+        - $ref: "#/parametersSchema/CountryParameter"
+      responses:
+        200:
+          description: A list of epws matching the query parameters
+          schema:
+            properties:
+              results:
+                type: array
+                items:
+                  properties:
+                    uuid:
+                      type: string
+                    epw:
+                      $ref: "#/definitions/EpwSchema"
+        404:
+          description: Couldn't find any EPWs matching your search query... :(
+    post:
+      summary: Create a new epw file
+      description: Adds a new epw file to the list
+      tags:
+        - EPW
+      parameters:
+        - in: body
+          name: epw
+          description: The location of the epw.
+          required: true
+          schema:
+            $ref: "#/definitions/EpwSchema"
+      responses:
+        204:
+          description: Epw succesfully created.
+          schema:
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create epw... :(
+  /epw/{uuid}:
+    parameters:
+      - name: uuid
+        in: path
+        required: true
+        description: The unique identifier of the epw.
+        type: string
+
+    get:
+      summary: Get a specific epw file
+      description: Returns a single epw file
+      tags:
+        - EPW
+      responses:
+        200:
+          description: Succesfully returns the EPW
+          schema:
+            required:
+              - uuid
+              - epw
+            properties:
+              uuid:
+                type: string
+              epw:
+                $ref: "#/definitions/EpwSchema"
+        400:
+          description: The uuid provided is invalid
+        404:
+          description: The epw does not exist
+
+    put:
+      summary: Modify an existing epw file
+      description: Modifies any parameter (except uuid) of an epw file by completely replacing the EPW file. A finer grain method can be set up later.
+      tags:
+        - EPW
+      parameters:
+        - in: body
+          name: epw
+          description: The location of the epw.
+          required: true
+          schema:
+            $ref: "#/definitions/EpwSchema"
+
+      responses:
+        '200':
+          description: Everything went smooth and well
+        '400':
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+    delete:
+      summary: Delete an existing epw file
+      description: Delete an epw file in the database specifying the uuid of the file
+      tags:
+        - EPW
+      responses:
+        '200':
+          description: File succesfully deleted
+        '400':
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+        '404':
+          description: File not found
+
+# MATERIALS_API PATHS
+  /material:
+    get:
+      summary: Get a list of material objects
+      description: Retrieves a list of material uuids for a given filter.
+      tags:
+        - Get and Delete Materials
+      parameters:
+        - $ref: "#/parametersSchema/MaterialTypeParameter"
+        - $ref: "#/parametersSchema/RGBTransmittanceParameter"
+        - $ref: "#/parametersSchema/RGBReflectanceParameter"
+      responses:
+        200:
+          description: A list of materials matching the query parameters
+          schema:
+            properties:
+              results:
+                type: array
+                items:
+                  properties:
+                    uuid:
+                      type: string
+                      example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+                    material:
+                      $ref: "#/definitions/MaterialSchema"
+
+        404:
+          description: Couldnt find any definitions matching your search query... :(
+
+  /material/{uuid}:
+    parameters:
+      - in: path
+        name: uuid
+        required: true
+        description: The unique identifier of the material.
+        type: string
+
+    get:
+      summary: Get a specific material object
+      description: Returns a single material object
+      tags:
+        - Get and Delete Materials
+      responses:
+        200:
+          description: Succesfully returns the material
+          schema:
+            required:
+              - uuid
+              - material
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+              material:
+                $ref: "#/definitions/MaterialSchema"
+        400:
+          description: The uuid provided is invalid
+        404:
+          description: The material does not exist
+
+    delete:
+      summary: Delete an existing material file
+      description: Delete an material file in the database specifying the uuid of the file
+      tags:
+        - Get and Delete Materials
+      responses:
+        200:
+          description: File succesfully deleted
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+        404:
+          description: File not found
+
+
+  /material/opaque:
+    post:
+      summary: Create a new opaque material object
+      description: Adds a new opaque material object to the database
+      tags:
+        - Opaque Material
+      parameters:
+        - name: opaque_material
+          in: body
+          description: an opaque material object
+          required: true
+          schema:
+                $ref: "#/definitions/OpaqueMaterialSchema"
+      responses:
+        204:
+          description: opaque material succesfully created.
+          schema:
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create opaque material... :(
+
+  /material/opaque/{uuid}:
+    put:
+      summary: Modify an existing opaque material file
+      description: Modifies any parameter (except uuid) of a material file by completely replacing the definition file. A finer grain method can be set up later.
+      tags:
+        - Opaque Material
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the material.
+          type: string
+        - name: opaque_material
+          in: body
+          description: an opaque material object
+          required: true
+          schema:
+                $ref: "#/definitions/OpaqueMaterialSchema"
+
+      responses:
+        200:
+          description: Everything went smooth and well
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+
+  /material/translucent:
+    post:
+      summary: Create a new translucent material object
+      description: Adds a new translucent material object to the database
+      tags:
+        - Translucent Material
+      parameters:
+        - name: translucent_material
+          in: body
+          description: a translucent material object
+          required: true
+          schema:
+                $ref: "#/definitions/TranslucentMaterialSchema"
+      responses:
+        204:
+          description: translucent material succesfully created.
+          schema:
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create material... :(
+
+  /material/translucent/{uuid}:
+    put:
+      summary: Modify an existing translucent material file
+      description: Modifies any parameter (except uuid) of a material file by completely replacing the definition file. A finer grain method can be set up later.
+      tags:
+        - Translucent Material
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the material.
+          type: string
+        - name: translucent_material
+          in: body
+          description: a translucent material object
+          required: true
+          schema:
+                $ref: "#/definitions/TranslucentMaterialSchema"
+
+      responses:
+        200:
+          description: Everything went smooth and well
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+
+  /material/light_source:
+    post:
+      summary: Create a new light_source material object
+      description: Adds a new light_source material object to the database
+      tags:
+        - Light Source Material
+      parameters:
+        - name: light_source_material
+          in: body
+          description: a light_source material object
+          required: true
+          schema:
+                $ref: "#/definitions/LightSourceMaterialSchema"
+      responses:
+        204:
+          description: light_source material succesfully created.
+          schema:
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create material... :(
+
+  /material/light_source/{uuid}:
+    put:
+      summary: Modify an existing light_source material file
+      description: Modifies any parameter (except uuid) of a material file by completely replacing the definition file. A finer grain method can be set up later.
+      tags:
+        - Light Source Material
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the material.
+          type: string
+        - name: light_source_material
+          in: body
+          description: a light_source material object
+          required: true
+          schema:
+                $ref: "#/definitions/LightSourceMaterialSchema"
+
+      responses:
+        200:
+          description: Everything went smooth and well
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+
+  /material/bsdf:
+    post:
+      summary: Create a new bsdf material object
+      description: Adds a new bsdf material object to the database
+      tags:
+        - BSDF Material
+      parameters:
+        - name: bsdf_material
+          in: body
+          description: a bsdf material object
+          required: true
+          schema:
+                $ref: "#/definitions/BSDFMaterialSchema"
+      responses:
+        204:
+          description: bsdf material succesfully created.
+          schema:
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create material... :(
+
+  /material/bsdf/{uuid}:
+    put:
+      summary: Modify an existing bsdf material file
+      description: Modifies any parameter (except uuid) of a material file by completely replacing the definition file. A finer grain method can be set up later.
+      tags:
+        - BSDF Material
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the material.
+          type: string
+        - name: bsdf_material
+          in: body
+          description: a bsdf material object
+          required: true
+          schema:
+                $ref: "#/definitions/BSDFMaterialSchema"
+
+      responses:
+        200:
+          description: Everything went smooth and well
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+
+# RECIPES_API PATHS
+  /recipe/:
+    get:
+      summary: Get a list of daylight recipe objects
+      description: Retrieves a list of daylight recipe objects for a given filter.
+      tags:
+        - Get and Delete Recipes
+      parameters:
+      - $ref: "#/parametersSchema/RecipeTypeParameter"
+      - $ref: "#/parametersSchema/RecipeLocationParameter"
+      - $ref: "#/parametersSchema/RecipeStateParameter"
+      responses:
+        200:
+          description: A list of analysis_grids matching the query parameters
+          schema:
+            properties:
+              results:
+                type: array
+                items:
+                  properties:
+                    uuid:
+                      type: string
+                    recipe:
+                      $ref: "#/definitions/GridBasedRecipeSchema"
+
+        404:
+          description: Couldn't find any definitions matching your search query... :(
+
+  /recipe/{uuid}:
+    parameters:
+      - in: path
+        name: uuid
+        required: true
+        description: The unique identifier of the analysis_grid.
+        type: string
+
+    get:
+      summary: Get a specific analysis_grid object
+      description: Returns a single analysis_grid object
+      tags:
+        - Get and Delete Recipes
+      responses:
+        200:
+          description: Succesfully returns the recipe
+          schema:
+            $ref: "#/definitions/GridBasedRecipeSchema"
+        400:
+          description: The uuid provided is invalid
+        404:
+          description: The analysis_grid does not exist
+
+    delete:
+      summary: Delete an existing recipe object
+      description: Delete an recipe object in the database specifying the uuid of the object
+      tags:
+        - Get and Delete Recipes
+      responses:
+        200:
+          description: object succesfully deleted
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+        404:
+          description: object not found
+
+# DAYLIGHT FACTOR RECIPE
+  /recipe/daylight_factor/gridbased:
+    post:
+      summary: Create a new analysis_grid object
+      description: Adds a new analysis_grid object to the list
+      tags:
+        - Daylight Factor Recipe
+      parameters:
+        - in: body
+          name: recipe
+          description: A analysis_grid JSON objectr with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/DaylightFactorGridBasedSchema"
+
+      responses:
+        204:
+          description: daylight_factor recipe succesfully created.
+          schema:
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create analysis_grid... :(
+
+  /recipe/daylight_factor/gridbased/{uuid}:
+    put:
+      summary: Modify an existing analysis_grid object
+      description: Modifies any parameter (except uuid) of a daylight_factor recipe object by completely replacing the definition object. A finer grain method can be set up later.
+      tags:
+        - Daylight Factor Recipe
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the daylight_factor recipe.
+          type: string
+        - in: body
+          name: recipe
+          description: A analysis_grid JSON objectr with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/DaylightFactorGridBasedSchema"
+
+      responses:
+        200:
+          description: Everything went smooth and well
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+
+# DIRECT REFLECTION RECIPE
+  /recipe/direct_reflection/gridbased:
+    post:
+      summary: Create a new direct_reflection object
+      description: Adds a new direct_reflection object to the list
+      tags:
+        - Direct Reflection Recipe
+      parameters:
+        - in: body
+          name: recipe
+          description: A direct_reflection JSON objectr with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/DirectReflectionGridBasedSchema"
+
+      responses:
+        204:
+          description: direct_reflection recipe succesfully created.
+          schema:
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create analysis_grid... :(
+
+  /recipe/direct_reflection/gridbased/{uuid}:
+    put:
+      summary: Modify an existing direct_reflection object
+      description: Modifies any parameter (except uuid) of a direct_reflection recipe object by completely replacing the definition object. A finer grain method can be set up later.
+      tags:
+        - Direct Reflection Recipe
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the direct_reflection recipe.
+          type: string
+        - in: body
+          name: recipe
+          description: A analysis_grid JSON objectr with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/DirectReflectionGridBasedSchema"
+
+      responses:
+        200:
+          description: Everything went smooth and well
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+
+# SOLAR ACCESS RECIPE
+  /recipe/solar_access/gridbased:
+    post:
+      summary: Create a new solar_access object
+      description: Adds a new solar_access object to the list
+      tags:
+        - Solar Access Recipe
+      parameters:
+        - in: body
+          name: recipe
+          description: A solar_access JSON objectr with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/SolarAccessGridBasedSchema"
+
+      responses:
+        204:
+          description: solar_access recipe succesfully created.
+          schema:
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create analysis_grid... :(
+
+  /recipe/solar_access/gridbased/{uuid}:
+    put:
+      summary: Modify an existing solar_access object
+      description: Modifies any parameter (except uuid) of a solar_access recipe object by completely replacing the definition object. A finer grain method can be set up later.
+      tags:
+        - Solar Access Recipe
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the solar_access recipe.
+          type: string
+        - in: body
+          name: recipe
+          description: A solar_access JSON objectr with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/SolarAccessGridBasedSchema"
+
+      responses:
+        200:
+          description: Everything went smooth and well
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+
+
+# POINT IN TIME RECIPE
+  /recipe/point_in_time/gridbased:
+    post:
+      summary: Create a new point_in_time object
+      description: Adds a new point_in_time object to the list
+      tags:
+        - Point in Time Recipe
+      parameters:
+        - in: body
+          name: recipe
+          description: A point_in_time JSON objectr with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/PointInTimeGridBasedSchema"
+
+      responses:
+        204:
+          description: point_in_time recipe succesfully created.
+          schema:
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create point_in_time recipe... :(
+
+  /recipe/point_in_time/gridbased/{uuid}:
+    put:
+      summary: Modify an existing point_in_time object
+      description: Modifies any parameter (except uuid) of a point_in_time recipe object by completely replacing the definition object. A finer grain method can be set up later.
+      tags:
+        - Point in Time Recipe
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the point_in_time recipe.
+          type: string
+        - in: body
+          name: recipe
+          description: A analysis_grid JSON objectr with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/PointInTimeGridBasedSchema"
+
+      responses:
+        200:
+          description: Everything went smooth and well
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+
+# ANNUAL RECIPE
+  /recipe/annual/gridbased:
+    post:
+      summary: Create a new annual object
+      description: Adds a new annual object to the list
+      tags:
+        - Annual Recipe
+      parameters:
+        - in: body
+          name: recipe
+          description: A annual JSON objectr with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/AnnualGridBasedSchema"
+
+      responses:
+        204:
+          description: annual recipe succesfully created.
+          schema:
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create annual... :(
+
+  /recipe/annual/gridbased/{uuid}:
+    put:
+      summary: Modify an existing annual object
+      description: Modifies any parameter (except uuid) of a annual recipe object by completely replacing the definition object. A finer grain method can be set up later.
+      tags:
+        - Annual Recipe
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the annual recipe.
+          type: string
+        - in: body
+          name: recipe
+          description: A annual JSON objectr with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/AnnualGridBasedSchema"
+
+      responses:
+        200:
+          description: Everything went smooth and well
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+
+# RADIATION RECIPE
+  /recipe/radiation/gridbased:
+    post:
+      summary: Create a new radiation object
+      description: Adds a new radiation object to the list
+      tags:
+        - Radiation Recipe
+      parameters:
+        - in: body
+          name: recipe
+          description: A radiation JSON objectr with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/RadiationGridBasedSchema"
+
+      responses:
+        204:
+          description: radiation recipe succesfully created.
+          schema:
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create analysis_grid... :(
+
+  /recipe/radiation/gridbased/{uuid}:
+    put:
+      summary: Modify an existing radiation object
+      description: Modifies any parameter (except uuid) of a radiation recipe object by completely replacing the definition object. A finer grain method can be set up later.
+      tags:
+        - Radiation Recipe
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the radiation recipe.
+          type: string
+        - in: body
+          name: recipe
+          description: A radiation JSON objectr with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/RadiationGridBasedSchema"
+
+      responses:
+        200:
+          description: Everything went smooth and well
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+
+# THREE PHASE RECIPE
+  /recipe/three_phase/gridbased:
+    post:
+      summary: Create a new three_phase object
+      description: Adds a new three_phase object to the list
+      tags:
+        - Three Phase Recipe
+      parameters:
+        - in: body
+          name: recipe
+          description: A three_phase JSON objectr with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/ThreePhaselGridBasedSchema"
+
+      responses:
+        204:
+          description: three_phase recipe succesfully created.
+          schema:
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create analysis_grid... :(
+
+  /recipe/three_phase/gridbased/{uuid}:
+    put:
+      summary: Modify an existing three_phase object
+      description: Modifies any parameter (except uuid) of a three_phase recipe object by completely replacing the definition object. A finer grain method can be set up later.
+      tags:
+        - Three Phase Recipe
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the three_phase recipe.
+          type: string
+        - in: body
+          name: recipe
+          description: A three_phase JSON objectr with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/ThreePhaselGridBasedSchema"
+
+      responses:
+        200:
+          description: Everything went smooth and well
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+
+# FIVE PHASE RECIPE
+  /recipe/five_phase/gridbased:
+    post:
+      summary: Create a new five_phase object
+      description: Adds a new five_phase object to the list
+      tags:
+        - Five Phase Recipe
+      parameters:
+        - in: body
+          name: recipe
+          description: A five_phase JSON objectr with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/FivePhaselGridBasedSchema"
+
+      responses:
+        204:
+          description: five_phase recipe succesfully created.
+          schema:
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create five_phase... :(
+
+  /recipe/five_phase/gridbased/{uuid}:
+    put:
+      summary: Modify an existing five_phase object
+      description: Modifies any parameter (except uuid) of a five_phase recipe object by completely replacing the definition object. A finer grain method can be set up later.
+      tags:
+        - Five Phase Recipe
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          description: The unique identifier of the five_phase recipe.
+          type: string
+        - in: body
+          name: recipe
+          description: A five_phase JSON objectr with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/FivePhaselGridBasedSchema"
+
+      responses:
+        200:
+          description: Everything went smooth and well
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+
+# SURFACE_API PATHS
+  /hbsurface:
+    get:
+      summary: Get a list of hbsurface objects
+      description: Retrieves a list of HoneyBee Surface objects for a given filter.
+      tags:
+        - Honeybee Surface
+      parameters:
+        - $ref: "#/parametersSchema/SurfaceTypeParameter"
+        - $ref: "#/parametersSchema/SurfaceMaterialParameter"
+        - $ref: "#/parametersSchema/SurfaceStateParameter"
+      responses:
+        200:
+          description: A list of hbsurfaces matching the query parameters
+          schema:
+            properties:
+              results:
+                type: array
+                items:
+                  properties:
+                    uuid:
+                      type: string
+                    hbsurface:
+                      $ref: "#/definitions/HBSurfaceSchema"
+
+        404:
+          description: Couldnt find any definitions matching your search query... :(
+    post:
+      summary: Create a new hbsurface object
+      description: Adds a new hbsurface object to the list
+      tags:
+        - Honeybee Surface
+      parameters:
+        - in: body
+          name: hbsurface
+          description: A hbsurface JSON object
+          required: true
+          schema:
+            $ref: "#/definitions/HBSurfaceSchema"
+      responses:
+        204:
+          description: hbsurface succesfully created.
+          schema:
+            properties:
+              uuid:
+                type: string
+                example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create hbsurface... :(
+
+  /hbsurface/{uuid}:
+    parameters:
+      - in: path
+        name: uuid
+        required: true
+        description: The unique identifier of the hbsurface.
+        type: string
+
+    get:
+      summary: Get a specific hbsurface object
+      description: Returns a single hbsurface object
+      tags:
+        - Honeybee Surface
+      responses:
+        200:
+          description: Succesfully returns the hbsurface
+          schema:
+            required:
+              - uuid
+              - hbsurface
+            properties:
+              uuid:
+                type: string
+              hbsurface:
+                $ref: "#/definitions/HBSurfaceSchema"
+        400:
+          description: The uuid provided is invalid
+        404:
+          description: The hbsurface does not exist
+
+    put:
+      summary: Modify an existing hbsurface object
+      description: Modifies any parameter (except uuid) of an hbsurface object by completely replacing the definition object. A finer grain method can be set up later.
+      tags:
+        - Honeybee Surface
+      parameters:
+        - in: body
+          name: hbsurface
+          description: A hbsurface JSON objectr with a uuid key.
+          required: true
+          schema:
+            $ref: "#/definitions/HBSurfaceSchema"
+
+      responses:
+        200:
+          description: Everything went smooth and well
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+    delete:
+      summary: Delete an existing hbsurface object
+      description: Delete an hbsurface object in the database specifying the uuid of the object
+      tags:
+        - Honeybee Surface
+      responses:
+        200:
+          description: object succesfully deleted
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+        404:
+          description: object not found
+
+# WEA_API PATHS
+  /wea:
+    get:
+      summary: Get a list of WEA objects
+      description: Retrieves a list of wea objects for a given filter.
+      tags:
+        - WEA
+      parameters:
+        - $ref: "#/parametersSchema/CountryParameter"
+      responses:
+        200:
+          description: A list of weas matching the query parameters
+          schema:
+            properties:
+              results:
+                type: array
+                items:
+                  properties:
+                    uuid:
+                      type: string
+                    hbsurface:
+                      $ref: "#/definitions/WeaSchema"
+        404:
+          description: Couldn't find any weas matching your search query... :(
+    post:
+      summary: Create a new wea object
+      description: Adds a new wea object to the list
+      tags:
+        - WEA
+      parameters:
+        - name: wea
+          in: body
+          description: a wea object
+          required: true
+          schema:
+                $ref: "#/definitions/WeaSchema"
+      responses:
+        204:
+          description: wea succesfully created.
+          schema:
+                properties:
+                  uuid:
+                    type: string
+                    example: 1a390fe5-9b53-4c52-9ecb-aa2f9633babd
+        400:
+          description: Could not create wea... :(
+
+  /wea/{uuid}:
+    parameters:
+      - name: uuid
+        required: true
+        in: path
+        description: The unique identifier of the wea.
+        type: string
+
+    get:
+      summary: Get a specific wea object
+      description: Returns a single wea object
+      tags:
+        - WEA
+      responses:
+        200:
+          description: Succesfully returns the wea
+          schema:
+                required:
+                  - uuid
+                  - wea
+                properties:
+                  uuid:
+                    type: string
+                  wea:
+                    $ref: "#/definitions/WeaSchema"
+        400:
+          description: The uuid provided is invalid
+        404:
+          description: The wea does not exist
+
+    put:
+      summary: Modify an existing wea object
+      description: Modifies any parameter (except uuid) of an wea object by completely replacing the wea object. A finer grain method can be set up later.
+      tags:
+        - WEA
+      parameters:
+        - name: wea
+          in: body
+          description: a wea object
+          required: true
+          schema:
+                $ref: "#/definitions/WeaSchema"
+
+      responses:
+        200:
+          description: Everything went smooth and well
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+    delete:
+      summary: Delete an existing wea object
+      description: Delete an wea object in the database specifying the uuid of the object
+      tags:
+        - WEA
+      responses:
+        200:
+          description: object succesfully deleted
+        400:
+          description: Bad request, something went wrong... :(
+          schema:
+            properties:
+              error:
+                type: string
+        404:
+          description: object not found
+
+parametersSchema:
+# ANALYSIS_GRID_API PARAMETERS
+  GridNameParameter:
+    name: grid_name
+    in: query
+    description: The name of the grid
+    type: string
+
+  MinPointsParameter:
+    name: min_points
+    in: query
+    description: The minimum amount of points the analysis grid has
+    type: integer
+
+  MaxPointsParameter:
+    name: max_points
+    in: query
+    description: The maximum amount of points the analysis grid has
+    type: integer
+
+# EPW_API PARAMETERS
+
+  CountryParameter:
+    name: country
+    in: query
+    description: The countyr the EPW is from
+    type: string
+
+# MATERIALS_API PARAMETERS
+
+  MaterialTypeParameter:
+    in: query
+    name: material_type
+    description: The type of the material to be queried
+    type: string
+    enum: [opaque, translucent, light_source, bsdf]
+
+  RGBTransmittanceParameter:
+    in: query
+    name: rgb_transmittance
+    description: The RGB average transmittance value (will only return translucent material)
+    type: number
+    minimum: 0
+    maximum: 1
+
+  RGBReflectanceParameter:
+    in: query
+    name: rgb_reflectance
+    description: The RGB average reflectance value (will only return opaque material)
+    type: number
+    minimum: 0
+    maximum: 1
+
+# RECIPES_API PARAMETERS
+
+  RecipeTypeParameter:
+    name: type
+    in: query
+    description: The type of recipe to be retrieved
+    type: string
+    enum: [daylight_factor, direct_reflection, solar_access, point_in_time, annual, radiation, three_phase, five_phase]
+
+  RecipeLocationParameter:
+    name: location
+    in: query
+    description: The location where the weather sky is generated from (can be country or city, will only work for climate based recipes)
+    type: string
+
+  RecipeStateParameter:
+    name: state
+    in: query
+    description: The state of the recipe on the server (whether it has run, is running, has failed or is on hold)
+    type: string
+    enum: [success, fail, running, waiting]
+
+# SURFACE_API PARAMETERS
+  SurfaceTypeParameter:
+    in: query
+    name: surface_type
+    description: The type of the surface to be queried
+    type: string
+    enum: [wall, underground_wall, roof, underground_ceiling, floor, slab_on_grade, exposed_floor, ceiling, window, context]
+
+  SurfaceMaterialParameter:
+    in: query
+    name: surface_material
+    description: retrieve surfaces based on the name of their main material definiton (not materials in a given surface state)
+    type: string
+
+  SurfaceStateParameter:
+    in: query
+    name: surface_state
+    description: retrieve a surface using the name of a given state it contains
+    type: string
+
+# WEA_API PARAMETERS
+
+definitions:
+# ANALYSIS_GRID_API DEFINITIONS
+  PointSchema:
+    properties:
+      x:
+        type: number
+      y:
+        type: number
+      z:
+        type: number
+
+  VectorSchema:
+    properties:
+      x:
+        type: number
+      y:
+        type: number
+      z:
+        type: number
+
+  HoySchema:
+    properties:
+      hoy_id:
+        type: integer
+        description: The hour of the year for a given set of results values
+      hoy:
+        properties:
+          direct_value:
+            type: number
+          indirect_value:
+            type: number
+
+  StateSchema:
+    properties:
+      state_id:
+        type: string
+        description: The id of a given state for the source of light
+      state:
+        type: array
+        items:
+          $ref: "#/definitions/HoySchema"
+
+  SourceSchema:
+    properties:
+      source_id:
+        type: string
+        description: The id of a source of light
+      source:
+        type: array
+        items:
+          $ref: "#/definitions/StateSchema"
+
+  AnalysisPointSchema:
+    properties:
+      location:
+        $ref: "#/definitions/PointSchema"
+      direction:
+        $ref: "#/definitions/VectorSchema"
+      values:
+        type: array
+        items:
+          $ref: "#/definitions/SourceSchema"
+
+  AnalysisGridSchema:
+    properties:
+      name:
+        type: string
+        description: The name of the grid
+      analysis_points:
+        type: array
+        items:
+          $ref: "#/definitions/AnalysisPointSchema"
+      window_groups:
+        type: array
+        items:
+          description: Name of a window group which contributes to the grid.
+          type: string
+# EPW_API DEFINITIONS
+  EpwSchema:
+    required:
+      - location
+      - header
+      - data
+    properties:
+      header:
+        type: array
+        minItems: 8
+        maxItems: 8
+        items:
+          type: string
+      location:
+        $ref: "#/definitions/EpwLocationSchema"
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/DataCollectionSchema"
+
+  EpwLocationSchema:
+    properties:
+      city:
+        type: string
+      latitude:
+        minimum: -90
+        maximum: 90
+        type: number
+      longitude:
+        minimum: -180
+        maximum: 180
+        type: number
+      time_zone:
+        type: string
+      elevation:
+        type: number
+
+  DataCollectionSchema:
+    required:
+      - data
+    properties:
+      header:
+        type: object
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/DataTypeSchema"
+
+  DataTypeSchema:
+    required:
+      - value
+      - datetime
+      - standard
+      - nickname
+    properties:
+      value:
+        allOf:
+          - type: string
+          - type: number
+      datetime:
+        default: null
+      standard:
+        type: string
+        enum: [SI, IP]
+      nickname:
+        type: string
+        default: null
+# MATERIALS_API DEFINITIONS
+  MaterialSchema:
+    properties:
+      type:
+        description: The type of material
+        type: string
+      material: {}
+
+    example:
+      type: opaque
+      material:
+        name: HoneyComb
+        type: plastic
+        r_reflectance: 0.4
+        g_reflectance: 0.5
+        b_reflectance: 0.2
+        refraction: 0.4
+        specularity: 0.01
+        roughness: 0.03
+        modifier: void
+
+  TranslucentMaterialSchema:
+    properties:
+      name:
+        description: Name of the material
+        type: string
+      r_transmittance:
+        description: Transmittance for red
+        type: number
+        minimum: 0
+        maximum: 1
+      g_transmittance:
+        description: Transmittance for green
+        type: number
+        minimum: 0
+        maximum: 1
+      b_transmittance:
+        description: Transmittance for blue
+        type: number
+        minimum: 0
+        maximum: 1
+      refraction:
+        description: Index of refraction
+        type: number
+        minimum: 0
+        maximum: 1
+      modifier:
+        type: string
+        default: void
+
+  OpaqueMaterialSchema:
+    properties:
+      name:
+        description: Name of the material
+        type: string
+      type:
+        description: Material type
+        type: string
+        enum: [metal, plastic]
+      r_reflectance:
+        description: Reflectance for red
+        type: number
+        minimum: 0
+        maximum: 1
+      g_reflectance:
+        description: Reflectance for green
+        type: number
+        minimum: 0
+        maximum: 1
+      b_reflectance:
+        description: Reflectance for blue
+        type: number
+        minimum: 0
+        maximum: 1
+      refraction:
+        description: Index of refraction
+        type: number
+        minimum: 0
+        maximum: 1
+      specularity:
+        description: Material specularity
+        type: number
+      roughness:
+        description: Material roughness
+        type: number
+      modifier:
+        type: string
+        default: void
+
+  LightSourceMaterialSchema:
+    properties:
+      name:
+        description: Name of the material
+        type: string
+      red:
+        description: A positive value for the Red channel of the glow
+        type: number
+        minimum: 0
+        maximum: 1
+      green:
+        description: A positive value for the Green channel of the glow
+        type: number
+        minimum: 0
+        maximum: 1
+      blue:
+        description: A positive value for the Blue channel of the glow
+        type: number
+        minimum: 0
+        maximum: 1
+      radius:
+        description: Maximum radius for shadow testing
+        type: number
+      modifier:
+        type: string
+        default: void
+
+  BSDFMaterialSchema:
+    properties:
+      name:
+        description: Name of the material
+        type: string
+      xml_data:
+        description: A string of the original XML
+        type: string
+      up_orientation:
+        type: number
+      thickness:
+        type: number
+      modifier:
+        type: string
+        default: void
+# RECIPES_API DEFINITIONS
+
+  HoyListSchema:
+    type: array
+    description: A list of hours of the year
+    items:
+      type: integer
+      description: min key value 0 and max key value 8760
+
+  AnalysisType:
+    type: integer
+    enum: [0,1,2]
+    description: 0 - illuminance(lux), 1 - radiation (kwh), 2 - luminance (Candela)
+
+  RadianceParameters:
+    type: string
+    description: A standard radiance parameter string
+    example: -ab 5 -aa 0.05 -ar 128
+
+  SkySchema:
+    properties:
+      location:
+        $ref: "#/definitions/EpwLocationSchema"
+      hour:
+        type: integer
+        description: hour of the day - minvalue 0 and max value 23
+      day:
+        type: integer
+        description: day of the month - minvalue 1 and max value 31
+      month:
+        type: integer
+        description: month of the year - minvalue 1 and max value 12
+      north:
+        type: number
+        description: angle in degrees between 0-360 to indicate North
+      sky_type:
+        type: integer
+        enum: [0,1,2,3,4,5]
+        description: 0 - Sunny with sun, 1 - sunny without sun, 2 - intermediate with sun, 3 - intermediate without sun, 4 - cloudy sky, 5 - uniform sky
+
+  SkyMtxSchema:
+    properties:
+      wea:
+        $ref: "#/definitions/WeaSchema"
+      sky_density:
+        type: integer
+        enum: [1,2]
+        description: 1 - Tregenza Sky, 2 - Reinhart Sky, etc. (Default - 1)
+      north:
+        type: number
+        minimum: 0
+        maximum: 360
+        description: angle in degrees between 0-360 to indicate North
+      hoys:
+        $ref: "#/definitions/HoyListSchema"
+      mode:
+        type: integer
+        enum: [0,1,2]
+        description: sky mode
+      suffix:
+        type: string
+        description: Suffix for the sky matrix
+
+
+  GridBasedRecipeSchema:
+    properties:
+      uuid:
+        description: The unique identifier of the recipe
+        type: string
+      recipe: {}
+    example:
+      uuid: 709116b8-d71e-4d50-bb54-216e83ad9f3f
+      recipe:
+        id: annual
+        type: gridbased
+        sky_mtx:
+          wea: wea Json object
+          sky_density: 1
+          north: 0
+          mode: 2
+          suffix: null
+        analysis_grids: [list of analysis grids]
+        surfaces: [list of surfaces]
+        analysis_type: 2
+        rad_parameters: -ab 5 -aa 0.05 -ar 128
+
+  DaylightFactorGridBasedSchema:
+    properties:
+      id:
+        type: string
+        enum: [daylight_factor]
+      type:
+        type: string
+        enum: [gridbased]
+      analysis_grids:
+        type: array
+        items:
+          $ref: "#/definitions/AnalysisGridSchema"
+      surfaces:
+        type: array
+        items:
+          $ref: "#/definitions/HBSurfaceSchema"
+      rad_parameters:
+        $ref: "#/definitions/RadianceParameters"
+
+
+  DirectReflectionGridBasedSchema:
+    properties:
+      id:
+        type: string
+        enum: [direct_reflection]
+      type:
+        type: string
+        enum: [gridbased]
+      analysis_grids:
+        type: array
+        items:
+          $ref: "#/definitions/AnalysisGridSchema"
+      surfaces:
+        type: array
+        items:
+          $ref: "#/definitions/HBSurfaceSchema"
+      location:
+        $ref: "#/definitions/EpwLocationSchema"
+      hoys:
+        $ref: "#/definitions/HoyListSchema"
+      sun_vectors:
+        type: array
+        description: A list of vectors if location is not provided
+        items:
+          $ref: "#/definitions/VectorSchema"
+
+  SolarAccessGridBasedSchema:
+    properties:
+      id:
+        type: string
+        enum: [solar_access]
+      type:
+        type: string
+        enum: [gridbased]
+      analysis_grids:
+        type: array
+        items:
+          $ref: "#/definitions/AnalysisGridSchema"
+      surfaces:
+        type: array
+        items:
+          $ref: "#/definitions/HBSurfaceSchema"
+      location:
+        $ref: "#/definitions/EpwLocationSchema"
+      hoys:
+        $ref: "#/definitions/HoyListSchema"
+      sun_vectors:
+        type: array
+        description: A list of vectors if location is not provided
+        items:
+          $ref: "#/definitions/VectorSchema"
+
+  PointInTimeGridBasedSchema:
+    properties:
+      id:
+        type: string
+        enum: [point_in_time]
+      type:
+        type: string
+        enum: [gridbased]
+      analysis_grids:
+        type: array
+        items:
+          $ref: "#/definitions/AnalysisGridSchema"
+      surfaces:
+        type: array
+        items:
+          $ref: "#/definitions/HBSurfaceSchema"
+      sky:
+        $ref: "#/definitions/SkySchema"
+      analysis_type:
+        $ref: "#/definitions/AnalysisType"
+      rad_parameters:
+        $ref: "#/definitions/RadianceParameters"
+
+  AnnualGridBasedSchema:
+    example:
+      id: annual
+      type: gridbased
+      sky_mtx:
+        wea: wea Json object
+        sky_density: 1
+        north: 0
+        mode: 2
+        suffix: null
+      analysis_grids:
+        type: array
+        items:
+          analysis_grid: an analysis grid Json object
+      surfaces:
+        type: array
+        items:
+          surface: an surface Json object
+      analysis_type: 2
+      rad_parameters: -ab 5 -aa 0.05 -ar 128
+    properties:
+      id:
+        type: string
+        enum: [annual]
+      type:
+        type: string
+        enum: [gridbased]
+      sky_mtx:
+        $ref: "#/definitions/SkyMtxSchema"
+      analysis_grids:
+        type: array
+        items:
+          $ref: "#/definitions/AnalysisGridSchema"
+      surfaces:
+        type: array
+        items:
+          $ref: "#/definitions/HBSurfaceSchema"
+      analysis_type:
+        $ref: "#/definitions/AnalysisType"
+      rad_parameters:
+        $ref: "#/definitions/RadianceParameters"
+
+  RadiationGridBasedSchema:
+    properties:
+      id:
+        type: string
+        enum: [radiation]
+      type:
+        type: string
+        enum: [gridbased]
+      sky_mtx:
+        $ref: "#/definitions/SkyMtxSchema"
+      analysis_grids:
+        type: array
+        items:
+          $ref: "#/definitions/AnalysisGridSchema"
+      surfaces:
+        type: array
+        items:
+          $ref: "#/definitions/HBSurfaceSchema"
+      rad_parameters:
+        $ref: "#/definitions/RadianceParameters"
+
+  ThreePhaselGridBasedSchema:
+    properties:
+      id:
+        type: string
+        enum: [three_phase]
+      type:
+        type: string
+        enum: [gridbased]
+      sky_mtx:
+        $ref: "#/definitions/SkyMtxSchema"
+      analysis_grids:
+        type: array
+        items:
+          $ref: "#/definitions/AnalysisGridSchema"
+      surfaces:
+        type: array
+        items:
+          $ref: "#/definitions/HBSurfaceSchema"
+      analysis_type:
+        $ref: "#/definitions/AnalysisType"
+      view_mtx_parameters:
+        $ref: "#/definitions/RadianceParameters"
+      daylight_mtx_parameters:
+        $ref: "#/definitions/RadianceParameters"
+
+  FivePhaselGridBasedSchema:
+    properties:
+      id:
+        type: string
+        enum: [five_phase]
+      type:
+        type: string
+        enum: [gridbased]
+      sky_mtx:
+        $ref: "#/definitions/SkyMtxSchema"
+      analysis_grids:
+        type: array
+        items:
+          $ref: "#/definitions/AnalysisGridSchema"
+      surfaces:
+        type: array
+        items:
+          $ref: "#/definitions/HBSurfaceSchema"
+      analysis_type:
+        $ref: "#/definitions/AnalysisType"
+      view_mtx_parameters:
+        $ref: "#/definitions/RadianceParameters"
+      daylight_mtx_parameters:
+        $ref: "#/definitions/RadianceParameters"
+# SURFACE_API DEFINITIONS
+  VertexSchema:
+    type: array
+    minimum: 3
+    items:
+      properties:
+        x:
+          type: number
+        y:
+          type: number
+        z:
+          type: number
+
+  SurfacePropertySchema:
+    properties:
+      surface_type:
+        type: number
+        minimum: 0
+        maximum: 6
+        description: 0.0=Wall, 0.5=UndergroundWall, 1.0=Roof, 1.5=UndergroundCeiling, 2.0=Floor, 2.5=SlabOnGrade, 2.75=ExposedFloor, 3.0=Ceiling, 5.0=Window, 6.0=Context
+      rad_properties:
+        $ref: "#/definitions/MaterialSchema"
+
+  SurfaceStateSchema:
+    properties:
+      name:
+        type: string
+        description: name of the state, usually default
+      surface_properties:
+        $ref: "#/definitions/SurfacePropertySchema"
+
+
+  AnalysisSurfaceSchema:
+    properties:
+      name:
+        type: string
+        description: The name of the surface
+      surface_type:
+        type: number
+        minimum: 0
+        maximum: 6
+        description: 0.0=Wall, 0.5=UndergroundWall, 1.0=Roof, 1.5=UndergroundCeiling, 2.0=Floor, 2.5=SlabOnGrade, 2.75=ExposedFloor, 3.0=Ceiling, 5.0=Window, 6.0=Context
+      vertices:
+        type: array
+        items:
+          $ref: "#/definitions/VertexSchema"
+      rad_properties:
+        properties:
+          uuid:
+            type: string
+          material:
+            $ref: "#/definitions/MaterialSchema"
+      surface_states:
+        type: array
+        items:
+          $ref: "#/definitions/SurfaceStateSchema"
+
+  HBSurfaceSchema:
+    properties:
+      parent_surface:
+        $ref: "#/definitions/AnalysisSurfaceSchema"
+      child_surfaces:
+        type: array
+        items:
+          $ref: "#/definitions/AnalysisSurfaceSchema"
+# WEA_API DEFINITIONS
+
+  WeaSchema:
+    required:
+      - location
+      - header
+      - data
+    properties:
+      header:
+        type: array
+        minItems: 8
+        maxItems: 8
+        items:
+          type: string
+      location:
+        $ref: "#/definitions/EpwLocationSchema"
+      direct_normal_radiation:
+        $ref: "#/definitions/DataCollectionSchema"
+      diffuse_horizontal_radiation:
+          $ref: "#/definitions/DataCollectionSchema"

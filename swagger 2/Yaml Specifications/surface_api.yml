@@ -18,9 +18,9 @@ paths:
       tags:
         - Honeybee Surface
       parameters:
-        - $ref: "#/parameters/SurfaceTypeParameter"
-        - $ref: "#/parameters/SurfaceMaterialParameter"
-        - $ref: "#/parameters/SurfaceStateParameter"
+        - $ref: "#/parametersSchema/SurfaceTypeParameter"
+        - $ref: "#/parametersSchema/SurfaceMaterialParameter"
+        - $ref: "#/parametersSchema/SurfaceStateParameter"
       responses:
         200:
           description: A list of hbsurfaces matching the query parameters
@@ -129,7 +129,7 @@ paths:
         404:
           description: object not found
 
-parameters:
+parametersSchema:
   SurfaceTypeParameter:
     in: query
     name: surface_type
