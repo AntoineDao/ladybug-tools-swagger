@@ -1530,8 +1530,7 @@ definitions:
         description: The type of material
         type: string
       material:
-        AnyValue:
-          description: A honeybee material json definition
+        description: A honeybee material json definition
 
     example:
       type: opaque
