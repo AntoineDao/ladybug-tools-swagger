@@ -193,6 +193,7 @@ definitions:
       value:
         type: number
       datetime:
+        type: string
         default: null
       standard:
         type: string
