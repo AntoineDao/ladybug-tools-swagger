@@ -331,7 +331,8 @@ definitions:
       type:
         description: The type of material
         type: string
-      material: {}
+      material:
+        type: object
 
     example:
       type: opaque

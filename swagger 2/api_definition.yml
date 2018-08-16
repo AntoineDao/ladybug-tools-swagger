@@ -1512,9 +1512,7 @@ definitions:
       - nickname
     properties:
       value:
-        allOf:
-          - type: string
-          - type: number
+        type: number
       datetime:
         default: null
       standard:
@@ -1530,7 +1528,7 @@ definitions:
         description: The type of material
         type: string
       material:
-        description: A honeybee material json definition
+        type: object
 
     example:
       type: opaque
@@ -1724,7 +1722,8 @@ definitions:
       uuid:
         description: The unique identifier of the recipe
         type: string
-      recipe: {}
+      recipe:
+        type: object
     example:
       uuid: 709116b8-d71e-4d50-bb54-216e83ad9f3f
       recipe:

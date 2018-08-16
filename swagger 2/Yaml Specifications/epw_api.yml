@@ -191,9 +191,7 @@ definitions:
       - nickname
     properties:
       value:
-        allOf:
-          - type: string
-          - type: number
+        type: number
       datetime:
         default: null
       standard:
