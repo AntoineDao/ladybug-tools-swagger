@@ -1515,7 +1515,6 @@ definitions:
         type: number
       datetime:
         type: string
-        default: null
       standard:
         type: string
         enum: [SI, IP]
