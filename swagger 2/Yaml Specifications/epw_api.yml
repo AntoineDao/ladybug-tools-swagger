@@ -199,4 +199,3 @@ definitions:
         enum: [SI, IP]
       nickname:
         type: string
-        default: null

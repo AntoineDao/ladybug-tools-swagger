@@ -1520,7 +1520,6 @@ definitions:
         enum: [SI, IP]
       nickname:
         type: string
-        default: null
 # MATERIALS_API DEFINITIONS
   MaterialSchema:
     properties:
