@@ -1733,7 +1733,6 @@ definitions:
           sky_density: 1
           north: 0
           mode: 2
-          suffix: null
         analysis_grids: [list of analysis grids]
         surfaces: [list of surfaces]
         analysis_type: 2
@@ -1843,7 +1842,6 @@ definitions:
         sky_density: 1
         north: 0
         mode: 2
-        suffix: null
       analysis_grids:
         type: array
         items:
