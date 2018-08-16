@@ -1,4 +1,6 @@
 import os
+import yaml
+import json
 
 spec_folder = 'Yaml Specifications/'
 
@@ -52,3 +54,21 @@ with open('api_definition.yml', 'w') as out_file:
     cycle_and_write(file_paths, out_file, write_parameters, 'parametersSchema:')
     cycle_and_write(file_paths, out_file, write_definitions, 'definitions:')
     out_file.close()
+
+with open('api_definition.yml', 'r') as out_file:
+    text = out_file.read()
+    out_file.close()
+
+with open('api_definition.yml', 'w') as out_file:
+    out_file.write(text.replace('parametersSchema', 'parameters'))
+    out_file.close()
+
+with open('api_definition.yml', 'r') as yfile:
+    yaml_def = yfile.read()
+    yfile.close()
+
+json_def = json.dumps(yaml.load(yaml_def), indent=2)
+
+with open('api_definition.json', 'w') as jfile:
+    jfile.write(json_def)
+    jfile.close()
